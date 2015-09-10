@@ -3,7 +3,8 @@ var express = require('express'),
     methodOverride = require('method-override'),
     morgan = require('morgan'),
     restful = require('node-restful'),
-    mongoose = restful.mongoose;
+    mongoose = restful.mongoose,
+    http = require('http');
 
 // Application config variables
 var config = {
@@ -26,5 +27,8 @@ routes.forEach(function(route) {
   route.define(app, "/api/v1");
 });
 
-app.listen(3000);
-console.log("Express server listening on port 3000");
+app.use('/', express.static('./footContestApp/www'));
+
+http.createServer(app).listen(3000, function() {
+  console.log("Express server listening on port 3000");
+});
