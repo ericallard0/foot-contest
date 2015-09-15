@@ -1,5 +1,5 @@
 
-<ion-view title="Login" class="login">
+<ion-view title="Register" class="register">
 
   <ion-header-bar class="bar-stable">
     <h1 class="title">Foot Contest</h1>
@@ -11,21 +11,24 @@
         <input type="text" ng-model="form_uname" placeholder="Username">
       </label>
       <label class="item item-input">
+        <input type="text" ng-model="form_email" placeholder="Email">
+      </label>
+      <label class="item item-input">
         <input type="text" ng-model="form_pwd" placeholder="Password">
       </label>
     </div>
     <div class="padding">
-      <button ng-click="login(form_uname, form_pwd)" 
-      class="button button-block button-positive activated">Login</button>
+      <button ng-click="register(form_uname, form_email, form_pwd)" 
+      class="button button-block button-positive activated">Register</button>
     </div>
   </ion-content>
 
   <div class="tabs tabs-striped tabs-icon-top tabs-color-assertive">
-    <a class="tab-item active" nav-transition="none" href="#/login">
+    <a class="tab-item" nav-transition="none" href="#/login">
       <i class="icon ion-log-in"></i>
       Login
     </a>
-    <a class="tab-item" nav-transition="none" href="#/register">
+    <a class="tab-item active" nav-transition="none" href="#/register">
       <i class="icon ion-person-add"></i>
       Register
     </a>

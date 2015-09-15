@@ -44,6 +44,12 @@ angular.module('starter', [
       controller: 'loginCtrl'
     })
 
+    .state('register', {
+      url: "/register",
+      templateUrl: 'templates/register.html',
+      controller: 'loginCtrl'
+    })
+
     .state('home',{
       url: "/home",
       template: '{{user}}',

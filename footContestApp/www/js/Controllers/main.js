@@ -8,9 +8,11 @@ angular.module('MainController', [])
     
     $rootScope.$on('$stateChangeStart', 
       function(event, toState, toParams, fromState, fromParams){
-        if(toState.name !== "login" 
-          && (!$rootScope.user || !$rootScope.user.username || !$rootScope.user.password))
-            $state.go("login");
+        if(["login", "register"].indexOf(toState.name) === -1 
+          && (!$rootScope.user || !$rootScope.user.username || !$rootScope.user.password)){
+            console.log("forbiden");
+            location.hash = "/";
+          }
       });
     
     $rootScope.user = {};

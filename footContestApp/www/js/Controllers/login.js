@@ -11,6 +11,18 @@ angular.module('LoginController', [])
       User.register(uname, email, pwd)
         .then(function(data){
           $rootScope.user = data.data;
+          $rootScope.user.password = pwd;
+          $state.go("home");
+        }, function(err){
+          console.error(err);
+        });
+    }  
+
+    $scope.login = function(uname, pwd){
+      User.login(uname, pwd)
+        .then(function(data){
+          $rootScope.user = data.data;
+          $rootScope.user.password = pwd;
           $state.go("home");
         }, function(err){
           console.error(err);

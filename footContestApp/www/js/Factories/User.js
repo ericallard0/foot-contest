@@ -18,6 +18,13 @@ angular.module('UserFactory', [])
       });
   }
 
+  User.login = function(uname, pwd){
+    return $http.post(userRoute + '/login', {
+        username: uname,
+        password: pwd
+      });
+  }
+
 
   return User;
 }])

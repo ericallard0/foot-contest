@@ -27,7 +27,7 @@ var userRoute = {
     });
 
     // Login
-    User.route('Login.post', function(req, res){
+    User.route('login.post', function(req, res){
       var uname = req.body.username;
       var pwd = req.body.password;
       authenticator.authenticate(uname, pwd)
