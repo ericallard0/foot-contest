@@ -6,18 +6,23 @@
   </ion-header-bar>
 
   <ion-content>
-
-    <foot-card class="list card" ng-repeat="fixture in fixtures"> </foot-card>
+    
+    <ul class="list">
+      <li class="item" ng-repeat="person in scores">
+        {{person.username}}
+        <span class="item-note">{{person.score}}</span>
+      </li>
+    </ul>
 
   </ion-content>
 
 
   <div class="tabs tabs-striped tabs-icon-top tabs-color-positive">
-    <a class="tab-item active" nav-transition="none" href="#/home">
+    <a class="tab-item" nav-transition="none" href="#/home">
       <i class="icon ion-compose"></i>
       Predictions
     </a>
-    <a class="tab-item" nav-transition="none" href="#/score">
+    <a class="tab-item active" nav-transition="none" href="#/score">
       <i class="icon ion-ribbon-a"></i>
       Result
     </a>

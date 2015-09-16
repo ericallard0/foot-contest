@@ -11,7 +11,8 @@ angular.module('starter', [
   'FootCardDirective',
   'LoginController',
   'MainController',
-  'HomeController'
+  'HomeController',
+  'ScoreController'
 ])
 
 .run(function($ionicPlatform) {
@@ -58,6 +59,12 @@ angular.module('starter', [
       url: "/home",
       templateUrl: 'templates/stream.html',
       controller: 'homeCtrl'
+    })
+
+    .state('score',{
+      url: "/score",
+      templateUrl: 'templates/score.html',
+      controller: 'scoreCtrl'
     });
 
   $urlRouterProvider.otherwise('/login');

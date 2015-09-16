@@ -5,6 +5,10 @@ angular.module('FootCardDirective', [])
     replace: true,
     templateUrl : '/templates/footcard.html',
     link: function (scope, iElement, iAttrs) {
+      // Replace Paris Saint-Germain to PSG
+      scope.fixture.awayTeamName = scope.fixture.awayTeamName.replace("Paris Saint-Germain", "PSG");
+      scope.fixture.homeTeamName = scope.fixture.homeTeamName.replace("Paris Saint-Germain", "PSG");
+      
       scope.isOpen = false;
       var matchId = scope.fixture._links.self.href.split('/').pop();
       scope.prono = _.findWhere($rootScope.user.predictions, {matchId: matchId});

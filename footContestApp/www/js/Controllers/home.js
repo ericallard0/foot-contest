@@ -2,11 +2,10 @@ angular.module('HomeController', [])
   
 .controller('homeCtrl', [
   'Foot',
-  'Score',
   '$rootScope', 
   '$scope', 
   '$state', 
-  function (Foot, Score, $rootScope, $scope, $state) {
+  function (Foot, $rootScope, $scope, $state) {
 
   $scope.fixtures = [];
 
@@ -15,8 +14,4 @@ angular.module('HomeController', [])
     $scope.fixtures = data.data.fixtures;
   });
 
-  // Score.getScores()
-  // .then(function(data){
-  //   console.log(data);
-  // });
 }])
