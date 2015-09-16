@@ -33,6 +33,12 @@ angular.module('UserFactory', [])
       });
   }
 
+  User.deletePrediction = function(userId, predictId){
+    return $http.delete(userRoute +'/'+ userId +'/predict', {
+        params: { predictId: predictId}
+      });
+  }
+
 
   return User;
 }])

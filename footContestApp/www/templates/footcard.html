@@ -8,7 +8,7 @@
   </a>
 
   <div class="item item-text-wrap" ng-if="isPredicted" ng-show="isOpen">
-    <h1 class="title">{{prono.predictHome}} : {{prono.predictAway}}</h1>
+    <h1 class="title">{{prono.predictHome}} : {{prono.predictAway}}  <i class="icon ion-trash-b" ng-click="deletePrediction(prono._id)"></i></h1>
   </div>
 
   <div class="item item-text-wrap" ng-if="!isPredicted && fixture.status === 'FINISHED'" ng-show="isOpen">

@@ -76,6 +76,26 @@ var userRoute = {
       }
     });
 
+    User.route('predict.delete', {
+      detail: true,
+      handler: function(req, res, next) {
+        var handleError = function(err){
+          res.status(500);
+          return res.send(err);
+        }
+        var userId = req.params.id;
+        var predictId = req.query.predictId;
+
+        User.findById(userId, function (err, doc){
+          doc.predictions.id(predictId).remove();
+          doc.save(function (err) {
+            if (err) return handleError(err);
+            res.send(doc);
+          });
+        });
+      }
+    });
+
     User.register(app, prefixAPI + '/users');
   }
 };

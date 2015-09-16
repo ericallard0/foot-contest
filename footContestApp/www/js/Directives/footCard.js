@@ -22,6 +22,21 @@ angular.module('FootCardDirective', [])
             console.log(err);
           });
       }
+
+      scope.deletePrediction = function(id){
+        var userId = $rootScope.user._id;
+        User.deletePrediction(userId, id)
+          .then(function(data){
+            console.log(data);
+            $rootScope.user.predictions = data.data.predictions;
+            scope.prono = _.findWhere($rootScope.user.predictions, {matchId: matchId});
+            scope.isPredicted = !!scope.prono;
+          }, 
+          function(err){
+            console.log(err);
+          });
+
+      }
     }
   };
 }])
