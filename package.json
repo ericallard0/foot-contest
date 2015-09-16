@@ -16,7 +16,8 @@
     "morgan": "~1.6.1",
     "method-override": "~2.3.5",
     "crypto": "0.0.3",
-    "q": "~1.4.1"
+    "q": "~1.4.1",
+    "extend": "~3.0.0"
   },
   "devDependencies": {}
 }

@@ -25,6 +25,14 @@ angular.module('UserFactory', [])
       });
   }
 
+  User.predict = function(userId, matchId, predictHome, predictAway){
+    return $http.post(userRoute +'/'+ userId +'/predict', {
+        matchId: matchId,
+        predictHome: predictHome,
+        predictAway: predictAway
+      });
+  }
+
 
   return User;
 }])

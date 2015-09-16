@@ -1,5 +1,8 @@
 var User = require('./../models/User');
+var ObjectId = require('node-restful').mongoose.Schema.ObjectId;
+var extend = require('extend');
 var authenticator = require('./../modules/authenticator');
+
 var userRoute = {
   define: function(app, prefixAPI) {
     User.methods(['get', 'post']);
@@ -43,6 +46,34 @@ var userRoute = {
           res.status(500);
           return res.send(err);
         });
+    });
+
+    // Set prediction
+    User.route('predict.post', {
+      detail: true,
+      handler: function(req, res, next) {
+        var handleError = function(err){
+          res.status(500);
+          return res.send(err);
+        }
+        var userId = req.params.id;
+        var matchId = req.body.matchId;
+        var predictHome = req.body.predictHome;
+        var predictAway = req.body.predictAway;
+
+
+        User.findById(userId, function (err, doc){
+          doc.predictions.push({
+            matchId: matchId,
+            predictHome: predictHome,
+            predictAway: predictAway
+          });
+          doc.save(function (err) {
+            if (err) return handleError(err);
+            res.send(doc);
+          });
+        });
+      }
     });
 
     User.register(app, prefixAPI + '/users');

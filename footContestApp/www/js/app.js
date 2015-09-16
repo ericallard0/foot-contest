@@ -29,6 +29,7 @@ angular.module('starter', [
 .config(['$httpProvider', function($httpProvider) {
         $httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        $httpProvider.defaults.headers.get = { 'X-Auth-Token': '561c5c7ec4914ac99d933970e5cad6b9' };
     }
 ])
 
