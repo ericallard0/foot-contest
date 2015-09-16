@@ -5,7 +5,7 @@ angular.module('MainController', [])
   '$scope', 
   '$state', 
   function ($rootScope, $scope, $state) {
-    
+    $rootScope.user = JSON.parse(localStorage.getItem('user')) || {};
     $rootScope.$on('$stateChangeStart', 
       function(event, toState, toParams, fromState, fromParams){
         if(["login", "register"].indexOf(toState.name) === -1 
@@ -15,6 +15,5 @@ angular.module('MainController', [])
           }
       });
     
-    $rootScope.user = {};
     
 }])

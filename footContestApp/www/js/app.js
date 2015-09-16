@@ -6,6 +6,8 @@
 angular.module('starter', [
   'ionic',
   'UserFactory',
+  'FootFactory',
+  'FootCardDirective',
   'LoginController',
   'MainController',
   'HomeController'
@@ -52,7 +54,7 @@ angular.module('starter', [
 
     .state('home',{
       url: "/home",
-      template: '{{user}}',
+      templateUrl: 'templates/stream.html',
       controller: 'homeCtrl'
     });
 

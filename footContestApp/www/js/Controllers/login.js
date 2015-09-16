@@ -12,6 +12,7 @@ angular.module('LoginController', [])
         .then(function(data){
           $rootScope.user = data.data;
           $rootScope.user.password = pwd;
+          localStorage.setItem('user', JSON.stringify($rootScope.user));
           $state.go("home");
         }, function(err){
           console.error(err);
@@ -23,6 +24,7 @@ angular.module('LoginController', [])
         .then(function(data){
           $rootScope.user = data.data;
           $rootScope.user.password = pwd;
+          localStorage.setItem('user', JSON.stringify($rootScope.user));
           $state.go("home");
         }, function(err){
           console.error(err);
