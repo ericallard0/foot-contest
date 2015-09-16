@@ -7,6 +7,7 @@ angular.module('starter', [
   'ionic',
   'UserFactory',
   'FootFactory',
+  'ScoreFactory',
   'FootCardDirective',
   'LoginController',
   'MainController',

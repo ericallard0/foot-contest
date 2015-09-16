@@ -39,6 +39,10 @@ angular.module('UserFactory', [])
       });
   }
 
+  User.getAll = function(){
+    return $http.get(userRoute);
+  }
+
 
   return User;
 }])

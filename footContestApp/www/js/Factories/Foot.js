@@ -11,7 +11,7 @@ angular.module('FootFactory', [])
   var apiRoute = 'http://api.football-data.org/alpha/';
   var team = 524; //PSG
   
-  Foot.getFixtures = function(uname, email, pwd){
+  Foot.getFixtures = function(){
     var route = apiRoute + 'teams/' +team +'/fixtures';
     return $http.get(route);
   }
