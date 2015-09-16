@@ -12,7 +12,8 @@ angular.module('starter', [
   'LoginController',
   'MainController',
   'HomeController',
-  'ScoreController'
+  'ScoreController',
+  'SettingsController'
 ])
 
 .run(function($ionicPlatform) {
@@ -65,6 +66,12 @@ angular.module('starter', [
       url: "/score",
       templateUrl: 'templates/score.html',
       controller: 'scoreCtrl'
+    })
+
+    .state('settings',{
+      url: "/settings",
+      templateUrl: 'templates/settings.html',
+      controller: 'settingsCtrl'
     });
 
   $urlRouterProvider.otherwise('/login');

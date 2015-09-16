@@ -1,0 +1,41 @@
+
+<ion-view title="Register" class="register">
+
+  <ion-header-bar class="bar-stable">
+    <h1 class="title">Foot Contest</h1>
+  </ion-header-bar>
+
+  <ion-content>
+  <ul class="list">
+    <li class="item item-toggle">
+       Dev mode
+       <label class="toggle toggle-positive">
+         <input type="checkbox" ng-model="devModeLocal" ngChange="devModeChange(devModeLocal)">
+         <div class="track">
+           <div class="handle"></div>
+         </div>
+       </label>
+    </li>
+  </ul>
+  <button class="button button-full button-black" ng-click="disconnect()">
+    Disconnection
+  </button>
+  </ion-content>
+
+
+  <div class="tabs tabs-striped tabs-icon-top tabs-color-positive">
+    <a class="tab-item" nav-transition="none" href="#/home">
+      <i class="icon ion-compose"></i>
+      Predictions
+    </a>
+    <a class="tab-item" nav-transition="none" href="#/score">
+      <i class="icon ion-ribbon-a"></i>
+      Result
+    </a>
+    <a class="tab-item active" nav-transition="none" href="#/settings">
+      <i class="icon ion-ios-gear"></i>
+      Settings
+    </a>
+  </div>
+
+</ion-view>

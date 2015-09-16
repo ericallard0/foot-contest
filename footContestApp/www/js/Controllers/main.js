@@ -19,5 +19,7 @@ angular.module('MainController', [])
           }
       });
     
+    $rootScope.devMode = false;
+    
     
 }])
