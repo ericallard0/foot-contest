@@ -9,7 +9,7 @@ angular.module('ScoreController', [])
 
   $scope.scores = [];
 
-  Score.getScores()
+  Score.getAllScores()
   .then(function(scores){
     $scope.scores = _.sortBy(scores, 'score').reverse();
   });

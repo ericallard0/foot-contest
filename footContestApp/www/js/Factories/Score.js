@@ -13,7 +13,31 @@ angular.module('ScoreFactory', [])
   
   var Score = {};
 
-  Score.getScores = function(){
+  Score.getMatchScore = function(match, predict){
+    // If the match is not done yet => no score to add
+    if(!match || match.status !== 'FINISHED') return 0;
+    // same result +70
+    if(predict.predictHome === match.result.goalsHomeTeam
+       && predict.predictAway === match.result.goalsAwayTeam){
+      return 70;
+    }
+    // same goal dif +50
+    if(predict.predictHome - predict.predictAway ===
+      match.result.goalsHomeTeam - match.result.goalsAwayTeam){
+      return 50;
+    }
+    // same winner +20
+    if((predict.predictHome > predict.predictAway && 
+      match.result.goalsHomeTeam > match.result.goalsAwayTeam)
+      || (predict.predictHome < predict.predictAway && 
+      match.result.goalsHomeTeam < match.result.goalsAwayTeam)){
+      return 20;
+    }
+    // ELSE
+    return 0;
+  };
+
+  Score.getAllScores = function(){
     // Request data about all users and all match
     var getUsers = User.getAll();
     var getFoot = Foot.getFixtures();
@@ -38,28 +62,7 @@ angular.module('ScoreFactory', [])
         angular.forEach(user.predictions, function(predict){
           // Get exact result
           var match = _.findWhere(fixtures, {matchId : predict.matchId});
-          // If the match is not done yet => no score to add
-          if(!match || match.status !== 'FINISHED') return;
-          // same result +70
-          if(predict.predictHome === match.result.goalsHomeTeam
-             && predict.predictAway === match.result.goalsAwayTeam){
-            user.score += 70;
-            return;
-          }
-          // same goal dif +50
-          if(predict.predictHome - predict.predictAway ===
-            match.result.goalsHomeTeam - match.result.goalsAwayTeam){
-            user.score += 50;
-            return;
-          }
-          // same winner +20
-          if((predict.predictHome > predict.predictAway && 
-            match.result.goalsHomeTeam > match.result.goalsAwayTeam)
-            || (predict.predictHome < predict.predictAway && 
-            match.result.goalsHomeTeam < match.result.goalsAwayTeam)){
-            user.score += 20;
-            return;
-          }
+          user.score += Score.getMatchScore(match, predict);
         });
         // Update the users array with the user score
         users[index] = user;

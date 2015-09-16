@@ -1,25 +1,35 @@
 <div>
+  <!-- Title -->
   <a class="item item-icon-left" ng-click="isOpen = !isOpen">
-      <i class="assertive icon ion-ios-checkmark" ng-if="!isPredicted && fixture.status === 'FINISHED'"></i>
+      <i class="assertive icon ion-ios-checkmark" ng-if="fixture.status === 'FINISHED'"></i>
       <i class="balanced icon ion-ios-help" ng-if="!isPredicted && fixture.status === 'TIMED'"></i>
-      <i class="positive icon ion-ios-clock" ng-if="isPredicted"></i>
+      <i class="positive icon ion-ios-clock" ng-if="isPredicted && fixture.status === 'TIMED'"></i>
       
       {{fixture.homeTeamName}} / {{fixture.awayTeamName}}
+
+      <span class="badge badge-dark" ng-if="matchScore !== 0">{{matchScore}}</span>
   </a>
 
-  <div class="item item-text-wrap" ng-if="isPredicted" ng-show="isOpen">
-    <h1 class="title icon-left"><i class="icon ion-trash-b" ng-click="deletePrediction(prono._id)"></i>&nbsp;&nbsp;&nbsp;{{prono.predictHome}} : {{prono.predictAway}}  </h1>
+  <!-- Predicted and not past -->
+  <div class="item item-text-wrap" ng-if="isPredicted && fixture.status === 'TIMED'" ng-show="isOpen">
+    <h1 class="title icon-left">
+    <i class="icon ion-trash-b" ng-click="deletePrediction(prono._id)"></i>
+    &nbsp;&nbsp;&nbsp;{{prono.predictHome}} : {{prono.predictAway}}  </h1>
   </div>
 
-  <div class="item item-text-wrap" ng-if="!isPredicted && fixture.status === 'FINISHED'" ng-show="isOpen">
+  <!-- Past -->
+  <div class="item item-text-wrap" ng-if="fixture.status === 'FINISHED'" ng-show="isOpen">
     <h1 class="title">{{fixture.result.goalsHomeTeam}} : {{fixture.result.goalsAwayTeam}}</h1>
   </div>
 
+  <!-- Predicted and past -->
+  <div class="item item-text-wrap" ng-if="isPredicted && fixture.status === 'FINISHED'" ng-show="isOpen">
+    <h2 class="title">{{prono.predictHome}} : {{prono.predictAway}}</h2>
+    <p>{{matchScore}} points</p>
+  </div>
 
-
-
+  <!-- Not predected and not past -->
   <div class="item item-input-inset " ng-if="!isPredicted && fixture.status === 'TIMED'" ng-show="isOpen">
-  <!-- <div class="item item-input-inset " ng-if="!isPredicted" ng-show="isOpen"> -->
     <label class="item-input-wrapper">
       <input type="number" value="0" min="0" max="20" ng-model="predictHome"> 
     </label>
@@ -31,4 +41,12 @@
       Submit
     </button>
   </div>
+
+  <!-- Date -->
+  <a class="item item-icon-left dark" ng-show="isOpen">
+    <i class="icon ion-ios-calendar-outline"></i>
+    {{fixture.date}}
+  </a>
+
+
 </div>
