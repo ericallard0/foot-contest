@@ -23,9 +23,9 @@
   </div>
 
   <!-- Predicted and past -->
-  <div class="item item-text-wrap" ng-if="isPredicted && fixture.status === 'FINISHED'" ng-show="isOpen">
-    <h2 class="title">{{prono.predictHome}} : {{prono.predictAway}}</h2>
-    <p>{{matchScore}} points</p>
+  <div class="item" ng-if="isPredicted && fixture.status === 'FINISHED'" ng-show="isOpen">
+    {{prono.predictHome}} : {{prono.predictAway}}
+     <span class="item-note">{{matchScore}} points</span>
   </div>
 
   <!-- Not predected and not past -->

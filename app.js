@@ -20,7 +20,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.json({type:'application/vnd.api+json'}));
 app.use(methodOverride());
 
-mongoose.connect("mongodb://localhost/resources");
+mongoose.connect('mongodb://app:footContest123@ds027829.mongolab.com:27829/footcontest');
+// mongoose.connect("mongodb://localhost/resources");
 
 var routes = require('./routes/index');
 routes.forEach(function(route) {

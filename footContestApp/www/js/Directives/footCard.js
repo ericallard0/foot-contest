@@ -25,7 +25,6 @@ angular.module('FootCardDirective', [])
         var userId = $rootScope.user._id;
         User.predict(userId, matchId, predictHome, predictAway)
           .then(function(data){
-            console.log(data);
             $rootScope.user.predictions = data.data.predictions;
             scope.prono = _.findWhere($rootScope.user.predictions, {matchId: matchId});
             scope.isPredicted = !!scope.prono;
@@ -39,7 +38,6 @@ angular.module('FootCardDirective', [])
         var userId = $rootScope.user._id;
         User.deletePrediction(userId, id)
           .then(function(data){
-            console.log(data);
             $rootScope.user.predictions = data.data.predictions;
             scope.prono = _.findWhere($rootScope.user.predictions, {matchId: matchId});
             scope.isPredicted = !!scope.prono;
