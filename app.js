@@ -30,6 +30,9 @@ routes.forEach(function(route) {
 
 app.use('/', express.static('./footContestApp/www'));
 
-http.createServer(app).listen(80, function() {
-  console.log("Express server listening on port 80");
+var server = require('http').createServer();
+var port = process.env.PORT || 3000;
+
+server.listen(port, function() {
+  console.log('Listening on ' + port);
 });
