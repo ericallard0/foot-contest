@@ -1,0 +1,6 @@
+{
+  "name":"foot contest",
+  "scripts":{
+    "postdeploy":"node app.js"
+  }
+}
