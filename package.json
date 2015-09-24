@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
+    "postinstall": "./node_modules/bower/bin/bower install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -18,7 +19,8 @@
     "method-override": "~2.3.5",
     "crypto": "0.0.3",
     "q": "~1.4.1",
-    "extend": "~3.0.0"
+    "extend": "~3.0.0",
+    "bower": "~1.5.2"
   },
   "devDependencies": {}
 }
