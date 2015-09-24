@@ -5,17 +5,18 @@ angular.module('MainController', [])
   '$scope', 
   '$state', 
   function ($rootScope, $scope, $state) {
+    var redirectToLogin = function(event, toState, toParams, fromState, fromParams){
+      if(["login", "register"].indexOf(toState.name) === -1 
+        && (!$rootScope.user || !$rootScope.user.username || !$rootScope.user.password)){
+          location.hash = "/login";
+      }
+    }
     $rootScope.user = JSON.parse(localStorage.getItem('user')) || {};
     $rootScope.$watch('user', function(){
       localStorage.setItem('user', JSON.stringify($rootScope.user));
     }, true);
-    $rootScope.$on('$stateChangeStart', 
-      function(event, toState, toParams, fromState, fromParams){
-        if(["login", "register"].indexOf(toState.name) === -1 
-          && (!$rootScope.user || !$rootScope.user.username || !$rootScope.user.password)){
-            location.hash = "/";
-          }
-      });
+    $rootScope.$on('$stateChangeStart', redirectToLogin);
+    redirectToLogin({}, {name: location.hash.substr(2)});
 
     $rootScope.devMode = false;
     

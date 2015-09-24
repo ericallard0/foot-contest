@@ -3,7 +3,7 @@ angular.module('FootCardDirective', [])
   return {
     restrict: 'E',
     replace: true,
-    templateUrl : '/templates/footcard.html',
+    templateUrl : 'templates/footcard.html',
     link: function (scope, iElement, iAttrs) {
       // Replace Paris Saint-Germain to PSG
       scope.fixture.awayTeamName = scope.fixture.awayTeamName.replace("Paris Saint-Germain", "PSG");
