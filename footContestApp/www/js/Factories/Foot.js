@@ -8,12 +8,10 @@ angular.module('FootFactory', [])
   ) {
   
   var Foot = {};
-  var apiRoute = 'http://api.football-data.org/alpha/';
-  var team = 524; //PSG
+  var apiRoute = 'http://footcontest.herokuapp.com/api/v1/foot';
   
   Foot.getFixtures = function(){
-    var route = apiRoute + 'teams/' +team +'/fixtures';
-    return $http.get(route);
+    return $http.get(apiRoute);
   }
 
   return Foot;
