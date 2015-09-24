@@ -8,7 +8,7 @@ var express = require('express'),
 
 // Application config variables
 var config = {
-  serverPort : 3000
+  serverPort : process.env.PORT || 3000
 }
 
 var app = express();
@@ -30,9 +30,6 @@ routes.forEach(function(route) {
 
 app.use('/', express.static('./footContestApp/www'));
 
-var server = require('http').createServer();
-var port = process.env.PORT || 3000;
-
-server.listen(port, function() {
-  console.log('Listening on ' + port);
+http.createServer(app).listen(config.serverPort, function() {
+  console.log("Express server listening on port " + config.serverPort);
 });
