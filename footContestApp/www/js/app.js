@@ -74,7 +74,7 @@ angular.module('starter', [
       controller: 'settingsCtrl'
     });
 
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/home');
 
 });
 
