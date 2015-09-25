@@ -9,6 +9,7 @@ angular.module('UserFactory', [])
   
   var User = {};
   var userRoute = 'http://footcontest.herokuapp.com/api/v1/users';
+  // var userRoute = '/api/v1/users';
 
   User.register = function(uname, email, pwd){
     return $http.post(userRoute, {

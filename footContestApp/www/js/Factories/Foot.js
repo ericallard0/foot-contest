@@ -8,6 +8,7 @@ angular.module('FootFactory', [])
   ) {
   
   var Foot = {};
+  // var apiRoute = '/api/v1/foot';
   var apiRoute = 'http://footcontest.herokuapp.com/api/v1/foot';
   
   Foot.getFixtures = function(){

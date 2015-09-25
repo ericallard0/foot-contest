@@ -19,6 +19,7 @@ angular.module('MainController', [])
     redirectToLogin({}, {name: location.hash.substr(2)});
 
     $rootScope.devMode = false;
+    $rootScope.showPast = true;
     
     
 }])

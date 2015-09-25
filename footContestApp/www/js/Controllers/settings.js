@@ -5,6 +5,7 @@ angular.module('SettingsController', [])
   '$scope', 
   function ($rootScope, $scope) {
     $scope.devModeLocal = $rootScope.devMode;
+    $scope.showPastLocal = $rootScope.showPast;
 
 
     $scope.disconnect = function(){
@@ -15,7 +16,13 @@ angular.module('SettingsController', [])
     }
 
     $scope.devModeChange = function(devMode){
-      $rootScope.devMode = devMode;
+      if($rootScope.user.username === 'bob'){
+        $rootScope.devMode = devMode;
+      }
+    }
+
+    $scope.showPastChange = function(showPast){
+      $rootScope.showPast = showPast;
     }
 
 }])

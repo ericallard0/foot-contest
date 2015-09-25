@@ -9,13 +9,17 @@ angular.module('HomeController', [])
 
   $scope.fixtures = [];
   $scope.error = '';
+  $scope.doRefresh = function(){
+    Foot.getFixtures()
+    .then(function(data){
+      $scope.fixtures = data.data.fixtures;
+      $scope.$broadcast('scroll.refreshComplete');
+    }, 
+    function(error){
+      $scope.error = error;
+    });
+  }
 
-  Foot.getFixtures()
-  .then(function(data){
-    $scope.fixtures = data.data.fixtures;
-  }, 
-  function(error){
-    $scope.error = error;
-  });
+  $scope.doRefresh();
 
 }])
