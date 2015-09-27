@@ -3,6 +3,9 @@ var ObjectId = require('node-restful').mongoose.Schema.ObjectId;
 var extend = require('extend');
 var authenticator = require('./../modules/authenticator');
 
+// TODO: check match status when adding prediction
+// var foot = require('./foot'); 
+
 var userRoute = {
   define: function(app, prefixAPI) {
     User.methods(['get', 'post']);

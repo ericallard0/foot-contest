@@ -23,34 +23,6 @@ app.use(methodOverride());
 mongoose.connect('mongodb://app:footContest123@ds027829.mongolab.com:27829/footcontest');
 // mongoose.connect("mongodb://localhost/resources");
 
-// Foot data
-var footData = [];
-var getFootData = function(){
-  http.get({
-    host: 'api.football-data.org',
-    path: '/alpha/teams/524/fixtures'
-  }, function(res) {
-    console.log('STATUS: ' + res.statusCode);
-    console.log('HEADERS: ' + JSON.stringify(res.headers));
-
-    // Buffer the body entirely for processing as a whole.
-    var bodyChunks = [];
-    res.on('data', function(chunk) {
-      // You can process streamed parts here...
-      bodyChunks.push(chunk);
-    }).on('end', function() {
-      footData = JSON.parse(bodyChunks.join(''));
-      console.log(JSON.stringify(footData));
-    })
-  });
-};
-getFootData();
-setInterval(getFootData, 1200000);
-
-app.get('/api/v1/foot', function(req, res){
-  res.json(footData);
-});
-
 var routes = require('./routes/index');
 routes.forEach(function(route) {
   route.define(app, "/api/v1");
