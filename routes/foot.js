@@ -3,19 +3,30 @@ var http = require('http');
 var footData = [];
 // Foot data
 var getFootData = function(){
+  var options = {
+    hostname: 'api.football-data.org',
+    port: 80,
+    path: '/alpha/teams/524/fixtures',
+    method: 'GET',
+    headers: {
+      'X-Auth-Token': '561c5c7ec4914ac99d933970e5cad6b9'
+    }
+  };
 
   try{
-    http.get({
-      host: 'api.football-data.org',
-      path: '/alpha/teams/524/fixtures'
-    }, function(res) {
+    http.get(options, function(res) {
       // Buffer the body entirely for processing as a whole.
       var bodyChunks = [];
       res.on('data', function(chunk) {
         // You can process streamed parts here...
         bodyChunks.push(chunk);
       }).on('end', function() {
-        footData = JSON.parse(bodyChunks.join(''));
+        data = JSON.parse(bodyChunks.join(''));
+        data.fixtures = data.fixtures.map(function(f){
+          f.matchId = f._links.self.href.split('/').pop();
+          return f;
+        });
+        footData = data;
         console.log("Get foot data req: done");
       })
     });

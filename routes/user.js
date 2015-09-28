@@ -1,10 +1,23 @@
+var _ = require('underscore-node');
 var User = require('./../models/User');
 var ObjectId = require('node-restful').mongoose.Schema.ObjectId;
-var extend = require('extend');
 var authenticator = require('./../modules/authenticator');
+var foot = require('./foot'); 
 
-// TODO: check match status when adding prediction
-// var foot = require('./foot'); 
+var canPredict = function(matchId){
+  // Check if the match is not started:
+  var footData = foot.getData().fixtures;
+  if(!footData) return false;
+  var fixture = _.findWhere(footData, {matchId: matchId});
+  if(!fixture) return false;
+  var current = new Date();
+  var matchDate = new Date(fixture.date);
+  if(current.getTime() > matchDate.getTime()){
+    console.log("Too late to predict now " + current.getTime() + " match : " + matchId);
+    return false;
+  }
+  return true;
+}
 
 var userRoute = {
   define: function(app, prefixAPI) {
@@ -64,6 +77,7 @@ var userRoute = {
         var predictHome = req.body.predictHome;
         var predictAway = req.body.predictAway;
 
+        if(!canPredict(matchId)) return handleError("can't predict");
 
         User.findById(userId, function (err, doc){
           doc.predictions.push({
@@ -88,7 +102,8 @@ var userRoute = {
         }
         var userId = req.params.id;
         var predictId = req.query.predictId;
-
+        // TODO: check if it's not too late
+        // if(!canPredict(matchId)) return handleError("can't predict");
         User.findById(userId, function (err, doc){
           doc.predictions.id(predictId).remove();
           doc.save(function (err) {
