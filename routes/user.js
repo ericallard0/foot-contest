@@ -105,7 +105,9 @@ var userRoute = {
         // TODO: check if it's not too late
         // if(!canPredict(matchId)) return handleError("can't predict");
         User.findById(userId, function (err, doc){
-          doc.predictions.id(predictId).remove();
+          var prediction = doc.predictions.id(predictId);
+          if(!canPredict(prediction.matchId)) return handleError("can't predict");
+          prediction.remove();
           doc.save(function (err) {
             if (err) return handleError(err);
             res.send(doc);
