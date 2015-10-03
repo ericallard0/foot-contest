@@ -8,11 +8,27 @@ angular.module('FootFactory', [])
   ) {
   
   var Foot = {};
-  // var apiRoute = '/api/v1/foot';
   var apiRoute = 'http://footcontest.herokuapp.com/api/v1/foot';
+  if(location.hostname === "localhost") apiRoute = '/api/v1/foot';
   
   Foot.getFixtures = function(){
-    return $http.get(apiRoute);
+    return $http.get(apiRoute)
+      .then(function(data){
+        return data.data.fixtures;
+      })
+  }
+
+  Foot.groupByStatus = function(fixtures, predictions){
+    return _.groupBy(fixtures, function(f){
+      var isPredicted = !!_.findWhere(predictions, {matchId: f.matchId});;
+      var status = f.status;
+      if(f.status !== "FINISHED" && isPredicted){
+        return "PREDICTED";
+      }
+      else{
+        return f.status;
+      }
+    });
   }
 
   return Foot;

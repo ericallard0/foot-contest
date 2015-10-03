@@ -7,19 +7,22 @@ angular.module('ScoreController', [])
   '$state', 
   function (Score, $rootScope, $scope, $state) {
 
-  $scope.scores = [];
   $scope.rank = 0;
 
-  $scope.doRefresh = function(){
-    Score.getAllScores()
-    .then(function(scores){
-      $scope.scores = _.sortBy(scores, 'score').reverse();
-      $scope.rank = _.findIndex($scope.scores, function(e){
-        return e._id == $rootScope.user._id;
-      }) +1;
+  $scope.doRefresh = function(f){
+    Score.getSortedUsers({
+      fixtures: f
+    })
+    .then(function(users){
+      $rootScope.users = users;
+      $scope.rank = Score.getRank(users, $rootScope.user)
       $scope.$broadcast('scroll.refreshComplete');
     });
   }
-
-  $scope.doRefresh();
+  if($rootScope.users.length === 0){
+    $scope.doRefresh($rootScope.fixtures);
+  }
+  else{
+    $scope.rank = Score.getRank($rootScope.users, $rootScope.user);
+  }
 }])

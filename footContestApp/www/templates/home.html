@@ -9,6 +9,7 @@
     <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()" spinner="spiral">
     </ion-refresher>
 
+
     <div class="card">
       <div class="item item-divider">
         Your rank
@@ -18,18 +19,24 @@
       </div>
     </div>
 
-    <ul class="list">
-      <li class="item" ng-class="{'item-divider': person.username === user.username}" ng-repeat="person in users">
-        {{person.username}}
-        <span class="item-note">{{person.score}}</span>
-      </li>
-    </ul>
+    <div class="row row-center" style="padding-top: 15%;" ng-show="fixtures.length == 0">
+      <div class="col" style="text-align: center;">
+        <ion-spinner class="spinner-positive"icon="spiral"></ion-spinner>
+      </div>
+    </div>
 
+    <foot-card class="list card" is-open="true" ng-if="firstMatch" fixture="firstMatch" ng-hide="firstMatch.status === 'FINISHED' && !showPast"> </foot-card>
+
+    <foot-card class="list card" is-open="true" ng-if="nextMatch" fixture="nextMatch" ng-hide="nextMatch.status === 'FINISHED' && !showPast"> </foot-card>
+    
+    <foot-card class="list card" is-open="true" ng-if="todoMatch" fixture="todoMatch" ng-hide="todoMatch.status === 'FINISHED' && !showPast"> </foot-card>
+    
+    <div style="padding-bottom: 150px;"></div>
   </ion-content>
 
 
   <div class="tabs tabs-striped tabs-icon-top tabs-color-positive">
-    <a class="tab-item" nav-transition="none" href="#/home">
+    <a class="tab-item active" nav-transition="none" href="#/home">
       <i class="icon ion-home"></i>
       Home
     </a>
@@ -37,7 +44,7 @@
       <i class="icon ion-compose"></i>
       Predictions
     </a>
-    <a class="tab-item active" nav-transition="none" href="#/score">
+    <a class="tab-item" nav-transition="none" href="#/score">
       <i class="icon ion-ribbon-a"></i>
       Result
     </a>

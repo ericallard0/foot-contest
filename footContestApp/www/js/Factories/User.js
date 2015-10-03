@@ -9,7 +9,7 @@ angular.module('UserFactory', [])
   
   var User = {};
   var userRoute = 'http://footcontest.herokuapp.com/api/v1/users';
-  // var userRoute = '/api/v1/users';
+  if(location.hostname === "localhost") userRoute = '/api/v1/users';
 
   User.register = function(uname, email, pwd){
     return $http.post(userRoute, {
@@ -41,7 +41,10 @@ angular.module('UserFactory', [])
   }
 
   User.getAll = function(){
-    return $http.get(userRoute);
+    return $http.get(userRoute)
+      .then(function(data){
+        return data.data;
+      });
   }
 
 

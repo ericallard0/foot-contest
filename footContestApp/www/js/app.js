@@ -12,6 +12,7 @@ angular.module('starter', [
   'LoginController',
   'MainController',
   'HomeController',
+  'PredictionsController',
   'ScoreController',
   'SettingsController'
 ])
@@ -56,10 +57,10 @@ angular.module('starter', [
       controller: 'loginCtrl'
     })
 
-    .state('home',{
-      url: "/home",
-      templateUrl: 'templates/stream.html',
-      controller: 'homeCtrl'
+    .state('predictions',{
+      url: "/predictions",
+      templateUrl: 'templates/predictions.html',
+      controller: 'predictionsCtrl'
     })
 
     .state('score',{
@@ -72,9 +73,15 @@ angular.module('starter', [
       url: "/settings",
       templateUrl: 'templates/settings.html',
       controller: 'settingsCtrl'
+    })
+
+    .state('home',{
+      url: "/home",
+      templateUrl: 'templates/home.html',
+      controller: 'homeCtrl'
     });
 
-  $urlRouterProvider.otherwise('/home');
+  $urlRouterProvider.otherwise('/predictions');
 
 });
 

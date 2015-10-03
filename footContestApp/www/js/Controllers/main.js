@@ -17,7 +17,8 @@ angular.module('MainController', [])
     }, true);
     $rootScope.$on('$stateChangeStart', redirectToLogin);
     redirectToLogin({}, {name: location.hash.substr(2)});
-
+    $rootScope.fixtures = [];
+    $rootScope.users = [];
     $rootScope.devMode = false;
     $rootScope.showPast = true;
     

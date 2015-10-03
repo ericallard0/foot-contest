@@ -3,8 +3,13 @@ angular.module('FootCardDirective', [])
   return {
     restrict: 'E',
     replace: true,
+    scope: {
+      fixture: '=',
+      isOpen: '='
+    },
     templateUrl : 'templates/footcard.html',
     link: function (scope, iElement, iAttrs) {
+      scope.title = iAttrs.title;
       // Replace Paris Saint-Germain to PSG
       scope.fixture.awayTeamName = scope.fixture.awayTeamName.replace("Paris Saint-Germain", "PSG");
       scope.fixture.homeTeamName = scope.fixture.homeTeamName.replace("Paris Saint-Germain", "PSG");
@@ -12,7 +17,6 @@ angular.module('FootCardDirective', [])
       scope.fixture.homeTeamName = scope.fixture.homeTeamName.replace("FC Girondins de Bordeaux", "Bordeaux");
       scope.fixture.date = (new Date(scope.fixture.date)).toLocaleString();
       
-      scope.isOpen = false;
       var matchId = scope.fixture._links.self.href.split('/').pop();
       scope.prono = _.findWhere($rootScope.user.predictions, {matchId: matchId});
       scope.isPredicted = !!scope.prono;

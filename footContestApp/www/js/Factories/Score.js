@@ -14,41 +14,61 @@ angular.module('ScoreFactory', [])
   var Score = {};
 
   Score.getMatchScore = function(match, predict){
+    var score = 0;
     // If the match is not done yet => no score to add
-    if(!match || match.status !== 'FINISHED') return 0;
+    if(!match || match.status !== 'FINISHED') return score;
     // same result +70
     if(predict.predictHome === match.result.goalsHomeTeam
        && predict.predictAway === match.result.goalsAwayTeam){
-      return 70;
+      return 60;
     }
     // same goal dif +50
     if(predict.predictHome - predict.predictAway ===
       match.result.goalsHomeTeam - match.result.goalsAwayTeam){
-      return 50;
+      return 40;
+    }
+    // same goal for one team +20
+    if(predict.predictHome === match.result.goalsHomeTeam ){
+      score += 20;
+    }
+    // same goal for one team +20
+    if(predict.predictAway === match.result.goalsAwayTeam ){
+      score += 20;
     }
     // same winner +20
     if((predict.predictHome > predict.predictAway && 
       match.result.goalsHomeTeam > match.result.goalsAwayTeam)
       || (predict.predictHome < predict.predictAway && 
       match.result.goalsHomeTeam < match.result.goalsAwayTeam)){
-      return 20;
+      score += 20
     }
     // ELSE
-    return 0;
+    return score;
   };
 
-  Score.getAllScores = function(){
+  Score.getSortedUsers = function(options){
+    var getUsers, getFoot;
     // Request data about all users and all match
-    var getUsers = User.getAll();
-    var getFoot = Foot.getFixtures();
+    if(options.users && options.users.length > 0){
+      getUsers = $q.when(options.users);
+    }
+    else{
+      getUsers = User.getAll();
+    }
+
+    if(options.fixtures && options.fixtures.length > 0){
+      getFoot = $q.when(options.fixtures);
+    }
+    else{
+      getFoot = Foot.getFixtures();
+    }
 
     var defered = $q.defer();
     // When all data are received
     $q.all([getUsers, getFoot])
     .then(function(data){
-      var users = data[0].data;
-      var foot = data[1].data;
-      var fixtures = foot.fixtures;
+      var users = data[0];
+      var fixtures = data[1];
 
       // Update each fixture with matchId
       fixtures = fixtures.map(function(fixt){
@@ -67,12 +87,18 @@ angular.module('ScoreFactory', [])
         // Update the users array with the user score
         users[index] = user;
       });
-
+      users = _.sortBy(users, 'score').reverse()
       defered.resolve(users);
     });
     
     return defered.promise;
-  }
+  };
+
+  Score.getRank = function(users, user){
+    return _.findIndex(users, function(e){
+      return (e._id == user.id) || (e._id == user._id) || (e.id == user._id) || (e.id == user.id);
+    }) +1;
+  };
 
   return Score;
 }]);
