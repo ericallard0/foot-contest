@@ -23,6 +23,7 @@ angular.module('SettingsController', [])
 
     $scope.showPastChange = function(showPast){
       $rootScope.showPast = showPast;
+      localStorage.setItem('showPast', showPast);
     }
 
 }])

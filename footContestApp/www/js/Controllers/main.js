@@ -20,7 +20,6 @@ angular.module('MainController', [])
     $rootScope.fixtures = [];
     $rootScope.users = [];
     $rootScope.devMode = false;
-    $rootScope.showPast = true;
-    
+    $rootScope.showPast = !(localStorage.getItem('showPast') == "false") || false;
     
 }])
