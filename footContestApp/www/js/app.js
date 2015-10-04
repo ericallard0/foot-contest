@@ -81,7 +81,7 @@ angular.module('starter', [
       controller: 'homeCtrl'
     });
 
-  $urlRouterProvider.otherwise('/predictions');
+  $urlRouterProvider.otherwise('/home');
 
 });
 

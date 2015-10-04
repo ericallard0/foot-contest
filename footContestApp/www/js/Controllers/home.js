@@ -60,4 +60,9 @@ angular.module('HomeController', [])
     setCards();
   }
 
+  // Update cards for each change
+  $scope.onPredict = function(){
+    setCards();
+    return $scope.todoMatch;
+  }
 }])

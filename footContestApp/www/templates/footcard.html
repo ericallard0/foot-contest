@@ -5,9 +5,9 @@
 
   <!-- Title -->
   <a class="item item-icon-left" ng-click="isOpen = !isOpen">
-      <i class="assertive icon ion-ios-checkmark" ng-if="fixture.status === 'FINISHED'"></i>
-      <i class="balanced icon ion-ios-help" ng-if="!isPredicted && fixture.status === 'TIMED'"></i>
-      <i class="positive icon ion-ios-clock" ng-if="isPredicted && fixture.status === 'TIMED'"></i>
+      <i class="assertive icon ion-ios-checkmark" ng-show="fixture.status === 'FINISHED'"></i>
+      <i class="balanced icon ion-ios-help" ng-show="!isPredicted && fixture.status === 'TIMED'"></i>
+      <i class="positive icon ion-ios-clock" ng-show="isPredicted && fixture.status === 'TIMED'"></i>
       
       {{fixture.homeTeamName}} / {{fixture.awayTeamName}}
 
@@ -15,25 +15,25 @@
   </a>
 
   <!-- Predicted and not past -->
-  <div class="item item-text-wrap" ng-if="isPredicted && fixture.status === 'TIMED'" ng-show="isOpen">
+  <div class="item item-text-wrap" ng-show="isPredicted && fixture.status === 'TIMED' && isOpen">
     <h1 class="title icon-left">
     <i class="icon ion-trash-b" ng-click="deletePrediction(prono._id)"></i>
     &nbsp;&nbsp;&nbsp;{{prono.predictHome}} : {{prono.predictAway}}  </h1>
   </div>
 
   <!-- Past -->
-  <div class="item item-text-wrap" ng-if="fixture.status === 'FINISHED'" ng-show="isOpen">
+  <div class="item item-text-wrap" ng-show="fixture.status === 'FINISHED' && isOpen">
     <h1 class="title">{{fixture.result.goalsHomeTeam}} : {{fixture.result.goalsAwayTeam}}</h1>
   </div>
 
   <!-- Predicted and past -->
-  <div class="item" ng-if="isPredicted && fixture.status === 'FINISHED'" ng-show="isOpen">
+  <div class="item" ng-show="isPredicted && fixture.status === 'FINISHED' && isOpen">
     {{prono.predictHome}} : {{prono.predictAway}}
      <span class="item-note">{{matchScore}} points</span>
   </div>
 
   <!-- Not predected and not past -->
-  <div class="item item-input-inset " ng-if="(!isPredicted && fixture.status === 'TIMED') || (!isPredicted && devMode)" ng-show="isOpen">
+  <div class="item item-input-inset " ng-show="((!isPredicted && fixture.status === 'TIMED') || (!isPredicted && devMode)) && isOpen">
     <label class="item-input-wrapper">
       <input type="number" value="0" min="0" max="20" ng-model="predictHome"> 
     </label>

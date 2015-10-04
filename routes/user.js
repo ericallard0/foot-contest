@@ -77,9 +77,11 @@ var userRoute = {
         var predictHome = req.body.predictHome;
         var predictAway = req.body.predictAway;
 
-        if(!canPredict(matchId)) return handleError("can't predict");
+        // if(!canPredict(matchId)) return handleError("can't predict");
 
+        console.log(userId);
         User.findById(userId, function (err, doc){
+          if (err) return handleError(err);
           doc.predictions.push({
             matchId: matchId,
             predictHome: predictHome,

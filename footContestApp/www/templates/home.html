@@ -25,11 +25,11 @@
       </div>
     </div>
 
-    <foot-card class="list card" is-open="true" ng-if="firstMatch" fixture="firstMatch" ng-hide="firstMatch.status === 'FINISHED' && !showPast"> </foot-card>
+    <foot-card class="list card" is-open="false" ng-if="firstMatch" fixture="firstMatch" ng-hide="firstMatch.status === 'FINISHED' && !showPast"> </foot-card>
 
-    <foot-card class="list card" is-open="true" ng-if="nextMatch" fixture="nextMatch" ng-hide="nextMatch.status === 'FINISHED' && !showPast"> </foot-card>
+    <foot-card class="list card" is-open="false" ng-if="nextMatch" fixture="nextMatch" ng-hide="nextMatch.status === 'FINISHED' && !showPast"> </foot-card>
     
-    <foot-card class="list card" is-open="true" ng-if="todoMatch" fixture="todoMatch" ng-hide="todoMatch.status === 'FINISHED' && !showPast"> </foot-card>
+    <foot-card class="list card" is-open="true" on-predict="onPredict" ng-if="todoMatch" fixture="todoMatch" ng-hide="todoMatch.status === 'FINISHED' && !showPast"> </foot-card>
     
     <div style="padding-bottom: 150px;"></div>
   </ion-content>
