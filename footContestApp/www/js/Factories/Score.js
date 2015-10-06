@@ -87,7 +87,7 @@ angular.module('ScoreFactory', [])
         // Update the users array with the user score
         users[index] = user;
       });
-      users = _.sortBy(users, 'score').reverse()
+      users = _.sortBy(users, 'score').reverse();
       defered.resolve(users);
     });
     
@@ -98,6 +98,34 @@ angular.module('ScoreFactory', [])
     return _.findIndex(users, function(e){
       return (e._id == user.id) || (e._id == user._id) || (e.id == user._id) || (e.id == user.id);
     }) +1;
+  };
+
+  Score.usersBet = function(matchId, users){
+    var getUsers;
+    var defered = $q.defer();    
+    if(users && users.length > 0){
+      getUsers = $q.when(users);
+    }
+    else{
+      getUsers = User.getAll();
+    }
+    getUsers.then(function(users){
+      // get the prediction of each users
+      var maped =  _.map(users, function(u){
+        return {
+          username: u.username,
+          prediction: _.findWhere(u.predictions, { matchId: matchId })
+        }
+      });
+      // remove users who did not predict
+      defered.resolve({
+        users: users,
+        data: _.filter(maped, function(e){
+          return !! e.prediction;
+        })
+      });
+    });
+    return defered.promise;
   };
 
   return Score;

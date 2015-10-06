@@ -4,7 +4,7 @@
   </div>
 
   <!-- Title -->
-  <a class="item item-icon-left" ng-click="isOpen = !isOpen">
+  <a class="item item-icon-left" ng-click="isOpen = !isOpen; othersBet = false">
       <i class="assertive icon ion-ios-checkmark" ng-show="fixture.status === 'FINISHED'"></i>
       <i class="balanced icon ion-ios-help" ng-show="!isPredicted && fixture.status === 'TIMED'"></i>
       <i class="positive icon ion-ios-clock" ng-show="isPredicted && fixture.status === 'TIMED'"></i>
@@ -15,21 +15,39 @@
   </a>
 
   <!-- Predicted and not past -->
-  <div class="item item-text-wrap" ng-show="isPredicted && fixture.status === 'TIMED' && isOpen">
-    <h1 class="title icon-left">
-    <i class="icon ion-trash-b" ng-click="deletePrediction(prono._id)"></i>
-    &nbsp;&nbsp;&nbsp;{{prono.predictHome}} : {{prono.predictAway}}  </h1>
+  <div class="item item-text-wrap item-icon-right" ng-show="isPredicted && fixture.status === 'TIMED' && isOpen">
+      <div class="row">
+        <h2 ng-click="deletePrediction(prono._id)" class="col col-70 col-offset-10">Your bet: &nbsp;{{prono.predictHome}} - {{prono.predictAway}} &nbsp;</h2>
+      </div>
+      <i class="icon ion-ios-people-outline" ng-click="toggleOthers()"></i>
   </div>
 
+
   <!-- Past -->
-  <div class="item item-text-wrap" ng-show="fixture.status === 'FINISHED' && isOpen">
-    <h1 class="title">{{fixture.result.goalsHomeTeam}} : {{fixture.result.goalsAwayTeam}}</h1>
+  <div class="item item-text-wrap" ng-show="!isPredicted && fixture.status === 'FINISHED' && isOpen">
+    <h1 class="title">{{fixture.result.goalsHomeTeam}} - {{fixture.result.goalsAwayTeam}}</h1>
   </div>
 
   <!-- Predicted and past -->
-  <div class="item" ng-show="isPredicted && fixture.status === 'FINISHED' && isOpen">
-    {{prono.predictHome}} : {{prono.predictAway}}
-     <span class="item-note">{{matchScore}} points</span>
+  <div class="item item-text-wrap item-icon-right" ng-show="isPredicted && fixture.status === 'FINISHED' && isOpen">
+    <div class="row">
+      <p class="col col-30">Score</p>  
+      <p class="col col-30">Bet</p>  
+      <p class="col col-30">Points</p>  
+    </div>
+    <div class="row">
+      <p class="col col-30">{{fixture.result.goalsHomeTeam}} - {{fixture.result.goalsAwayTeam}}</p>
+      <p class="col col-30">{{prono.predictHome}} - {{prono.predictAway}}</p>  
+      <p class="col col-30">{{matchScore}}</p>  
+    </div>
+      <i class="icon ion-ios-people-outline" ng-click="toggleOthers()"></i>
+  </div>
+
+  <div class="item item-text-wrap" ng-show="isOpen && othersBet">
+    <p ng-repeat="prediction in usersPrediction" class="row">
+      <span class="col-90">{{prediction.username}}</span> 
+      <span class="col-10">{{prediction.prediction.predictHome}}-{{prediction.prediction.predictAway}}</span> 
+    </p>
   </div>
 
   <!-- Not predected and not past -->
@@ -37,13 +55,11 @@
     <label class="item-input-wrapper">
       <input type="number" value="0" min="0" max="20" ng-model="predictHome"> 
     </label>
-    <h2>:</h2> 
+    <h2>&nbsp;-&nbsp;</h2> 
     <label class="item-input-wrapper">
       <input type="number" value="0" min="0" max="20" ng-model="predictAway">
     </label>
-    <button class="button button-small" ng-click="predict(predictHome, predictAway)">
-      Submit
-    </button>
+    <a class="button button-icon icon ion-ios-football-outline" ng-click="predict(predictHome, predictAway)"></a>
   </div>
 
   <!-- Date -->

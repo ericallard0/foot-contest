@@ -11,6 +11,7 @@ angular.module('FootCardDirective', [])
     templateUrl : 'templates/footcard.html',
     link: function (scope, iElement, iAttrs) {
       scope.title = iAttrs.title;
+      scope.othersBet = false;
       // Replace Paris Saint-Germain to PSG
       var init = function(){
         scope.fixture.awayTeamName = scope.fixture.awayTeamName.replace("Paris Saint-Germain", "PSG");
@@ -48,6 +49,17 @@ angular.module('FootCardDirective', [])
           });
       }
 
+
+      scope.toggleOthers = function(){
+        scope.othersBet = !scope.othersBet;
+        if(scope.othersBet){
+          Score.usersBet(scope.matchId, $rootScope.users)
+            .then(function(data){
+              scope.usersPrediction = data.data;
+              $rootScope.users = data.users;  
+            });
+        }
+      }
       scope.deletePrediction = function(id){
         var userId = $rootScope.user._id;
         User.deletePrediction(userId, id)

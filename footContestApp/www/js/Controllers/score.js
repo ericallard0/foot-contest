@@ -9,9 +9,10 @@ angular.module('ScoreController', [])
 
   $scope.rank = 0;
 
-  $scope.doRefresh = function(f){
+  $scope.doRefresh = function(f, u){
     Score.getSortedUsers({
-      fixtures: f
+      fixtures: f,
+      users: u,
     })
     .then(function(users){
       $rootScope.users = users;
@@ -21,6 +22,9 @@ angular.module('ScoreController', [])
   }
   if($rootScope.users.length === 0){
     $scope.doRefresh($rootScope.fixtures);
+  }
+  else if(!$rootScope.users[0].score){
+    $scope.doRefresh($rootScope.fixtures, $rootScope.users); 
   }
   else{
     $scope.rank = Score.getRank($rootScope.users, $rootScope.user);
