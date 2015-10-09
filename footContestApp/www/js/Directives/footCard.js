@@ -18,7 +18,7 @@ angular.module('FootCardDirective', [])
         scope.fixture.homeTeamName = scope.fixture.homeTeamName.replace("Paris Saint-Germain", "PSG");
         scope.fixture.awayTeamName = scope.fixture.awayTeamName.replace("FC Girondins de Bordeaux", "Bordeaux");
         scope.fixture.homeTeamName = scope.fixture.homeTeamName.replace("FC Girondins de Bordeaux", "Bordeaux");
-        scope.fixture.date = (new Date(scope.fixture.date)).toLocaleString();
+        scope.fixture.datePrint = (new Date(scope.fixture.date)).toLocaleString();
         scope.predictHome =  scope.predictAway = "";
         
         scope.matchId = scope.fixture._links.self.href.split('/').pop();

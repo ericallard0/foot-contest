@@ -96,7 +96,7 @@ angular.module('ScoreFactory', [])
 
   Score.getRank = function(users, user){
     return _.findIndex(users, function(e){
-      return (e._id == user.id) || (e._id == user._id) || (e.id == user._id) || (e.id == user.id);
+      return e._id == user._id;
     }) +1;
   };
 
