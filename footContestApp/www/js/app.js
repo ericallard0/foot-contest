@@ -37,6 +37,10 @@ angular.module('starter', [
     }
 ])
 
+.config(['$ionicConfigProvider', function($ionicConfigProvider) {
+  $ionicConfigProvider.views.maxCache(10);
+}])
+
 .config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states

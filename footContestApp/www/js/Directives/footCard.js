@@ -6,7 +6,8 @@ angular.module('FootCardDirective', [])
     scope: {
       fixture: '=',
       onPredict: '=',
-      isOpen: '='
+      isOpen: '=',
+      resetOnRefresh: '='
     },
     templateUrl : 'templates/footcard.html',
     link: function (scope, iElement, iAttrs) {
@@ -72,6 +73,9 @@ angular.module('FootCardDirective', [])
             console.log(err);
           });
 
+      }
+      if(scope.resetOnRefresh){
+        scope.$watch('fixture', init);
       }
     }
   };

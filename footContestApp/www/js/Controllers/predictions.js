@@ -18,7 +18,6 @@ angular.module('PredictionsController', [])
       $scope.error = error;
     });
   }
-
   if($rootScope.fixtures.length === 0){
     $scope.doRefresh();
   }
