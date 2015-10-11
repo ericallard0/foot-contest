@@ -1,0 +1,29 @@
+.fc{
+}
+.fc-predictions{
+  .card.footcard{
+    box-shadow: none;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    &.isClose{
+      border-bottom-width: 0px;
+    }
+    &.red > .item:first-child i{
+      color: #eb7e61;
+    }
+
+    &.yellow > .item:first-child i{
+      color: #f1d04f;
+    }
+
+    &.green > .item:first-child i{
+      color: #07c6b2;
+    }
+
+    >.item .badge{
+      color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+  }
+
+}

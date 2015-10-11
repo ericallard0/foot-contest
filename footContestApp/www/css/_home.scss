@@ -1,0 +1,35 @@
+.fc.fc-home{
+  .card.footcard{
+    box-shadow: inset 0px 3px 2px rgba(0, 0, 0, 0.1);
+    
+    > .item:first-child{
+      box-shadow: inset 0px 3px 2px rgba(0, 0, 0, 0.1);
+    }
+    &.isClose > .item:first-child{
+      box-shadow: inset 3px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    > .item:last-child{
+      box-shadow: inset 0px -3px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    &.red > .item:first-child{
+      background-color: #eb7e61;
+      color: white;
+    }
+
+    &.yellow > .item:first-child{
+      background-color: #f1d04f;
+      color: white;
+    }
+
+    &.green > .item:first-child{
+      background-color: #07c6b2;
+      color: white;
+    }
+
+    >.item .badge{
+      color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+  }
+}

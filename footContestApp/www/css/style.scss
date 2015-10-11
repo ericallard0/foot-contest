@@ -1,0 +1,60 @@
+@import "login";
+
+.bar.bar-stable .title{
+  font-style: oblique;
+}
+
+.fc{
+
+  &.fc-score div.bg-img{
+    background-image: url('../img/worldcup.jpg');
+  }
+  &.fc-home div.bg-img{
+    background-image: url('../img/header-bg-b.jpg');
+  }
+  div.bg-img{
+    background-size: cover;
+    background-position: center center;
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+    h1{
+      text-align: center;
+      padding: 11% 0;
+      text-align: center;
+      color: #d7d7d7;
+      background-color: rgba(0, 0, 0, 0.4);
+      margin: 0;
+    }
+  }
+
+  .card.footcard{
+    margin: 20px 0;
+  }
+  .card.footcard .item{
+    background-color: #f8f8f8;
+    .item-input-wrapper{
+      background-color: white;
+      border: 1px solid #bbb;
+    }
+  }
+
+  .toggle.toggle-positive input:checked + .track{
+    border-color: rgb(44, 44, 109);
+    background-color: rgb(44, 44, 109);
+  }
+
+  .padding-bottom.big-padding{
+    padding-bottom: 60px;
+  }
+
+  .button.button-full.button-positive, .button.button-full.button-positive.active, .button.button-full.button-positive.activated{
+    background-color: rgb(44, 44, 109);
+    border-color: rgb(44, 44, 109);
+  }
+
+
+}
+
+
+
+@import "home";
+@import "predictions";

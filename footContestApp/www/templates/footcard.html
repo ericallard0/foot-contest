@@ -1,13 +1,18 @@
-<div>
+<div ng-class="{
+  red: fixture.status === 'FINISHED',
+  yellow: isPredicted && fixture.status === 'TIMED',
+  green: !isPredicted && fixture.status === 'TIMED',
+  isClose: !isOpen
+}">
   <div class="item item-divider" ng-if="title.length">
     {{title}}
   </div>
 
   <!-- Title -->
   <a class="item item-icon-left" ng-click="isOpen = !isOpen; othersBet = false">
-      <i class="assertive icon ion-ios-checkmark" ng-show="fixture.status === 'FINISHED'"></i>
-      <i class="balanced icon ion-ios-help" ng-show="!isPredicted && fixture.status === 'TIMED'"></i>
-      <i class="positive icon ion-ios-clock" ng-show="isPredicted && fixture.status === 'TIMED'"></i>
+      <i class="icon ion-ios-checkmark" ng-show="fixture.status === 'FINISHED'"></i>
+      <i class="icon ion-ios-help" ng-show="!isPredicted && fixture.status === 'TIMED'"></i>
+      <i class="icon ion-ios-clock" ng-show="isPredicted && fixture.status === 'TIMED'"></i>
       
       {{fixture.homeTeamName}} / {{fixture.awayTeamName}}
 
