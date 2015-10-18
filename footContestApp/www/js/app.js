@@ -39,6 +39,7 @@ angular.module('starter', [
 
 .config(['$ionicConfigProvider', function($ionicConfigProvider) {
   $ionicConfigProvider.views.maxCache(10);
+  $ionicConfigProvider.tabs.position('bottom');
 }])
 
 .config(function($stateProvider, $urlRouterProvider) {
