@@ -12,7 +12,7 @@ angular.module('LoginController', [])
         .then(function(data){
           $rootScope.user = data.data;
           $rootScope.user.password = pwd;
-          $state.go("home");
+          $state.go("tabs.home");
         }, function(err){
           console.error(err);
         });
@@ -23,7 +23,7 @@ angular.module('LoginController', [])
         .then(function(data){
           $rootScope.user = data.data;
           $rootScope.user.password = pwd;
-          $state.go("home");
+          $state.go("tabs.home");
         }, function(err){
           console.error(err);
         });

@@ -60,32 +60,54 @@ angular.module('starter', [
       templateUrl: 'templates/register.html',
       controller: 'loginCtrl'
     })
-
-    .state('predictions',{
+ 
+    .state('tabs', {
+      url: "/tab",
+      abstract: true,
+      templateUrl: "templates/tabs.html"
+    })
+ 
+    .state('tabs.predictions',{
       url: "/predictions",
-      templateUrl: 'templates/predictions.html',
-      controller: 'predictionsCtrl'
+      views: {
+        'predictions-tab': {
+          templateUrl: "templates/predictions.html",
+          controller: 'predictionsCtrl'
+        }
+      }
     })
 
-    .state('score',{
+    .state('tabs.score',{
       url: "/score",
-      templateUrl: 'templates/score.html',
-      controller: 'scoreCtrl'
+      views: {
+        'score-tab': {
+          templateUrl: "templates/score.html",
+          controller: 'scoreCtrl'
+        }
+      }
     })
 
-    .state('settings',{
+    .state('tabs.settings',{
       url: "/settings",
-      templateUrl: 'templates/settings.html',
-      controller: 'settingsCtrl'
+      views: {
+        'settings-tab': {
+          templateUrl: "templates/settings.html",
+          controller: 'settingsCtrl'
+        }
+      }
     })
 
-    .state('home',{
+    .state('tabs.home',{
       url: "/home",
-      templateUrl: 'templates/home.html',
-      controller: 'homeCtrl'
+      views: {
+        'home-tab': {
+          templateUrl: "templates/home.html",
+          controller: 'homeCtrl'
+        }
+      }
     });
 
-  $urlRouterProvider.otherwise('/home');
+  $urlRouterProvider.otherwise('/tab/home');
 
 });
 
