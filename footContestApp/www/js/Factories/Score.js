@@ -14,6 +14,8 @@ angular.module('ScoreFactory', [])
   var Score = {};
 
   Score.getMatchScore = function(match, predict){
+    // If the prediction does not exist
+    if(predict.predictHome === undefined) return undefined;
     var score = 0;
     // If the match is not done yet => no score to add
     if(!match || match.status !== 'FINISHED') return score;
@@ -100,7 +102,7 @@ angular.module('ScoreFactory', [])
     }) +1;
   };
 
-  Score.usersBet = function(matchId, users){
+  Score.usersBet = function(matchId, users, fixture){
     var getUsers;
     var defered = $q.defer();    
     if(users && users.length > 0){
@@ -112,10 +114,14 @@ angular.module('ScoreFactory', [])
     getUsers.then(function(users){
       // get the prediction of each users
       var maped =  _.map(users, function(u){
-        return {
+        var userPrediction  ={
           username: u.username,
           prediction: _.findWhere(u.predictions, { matchId: matchId })
-        }
+        };
+        // Add the user score if the match is done
+        if(fixture.status === "FINISHED" && userPrediction.prediction)
+          userPrediction.score = Score.getMatchScore(fixture, userPrediction.prediction);
+        return userPrediction;
       });
       // remove users who did not predict
       defered.resolve({

@@ -34,11 +34,14 @@
   box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1); }
   .fc div.bg-img h1 {
     text-align: center;
-    padding: 11% 0;
+    padding: 5% 0;
     text-align: center;
     color: #d7d7d7;
     background-color: rgba(0, 0, 0, 0.4);
     margin: 0; }
+    .fc div.bg-img h1 span {
+      text-transform: uppercase;
+      font-size: 15px; }
 .fc .card.footcard {
   margin: 20px 0; }
 .fc .card.footcard .item {
@@ -54,6 +57,14 @@
 .fc .button.button-full.button-positive, .fc .button.button-full.button-positive.active, .fc .button.button-full.button-positive.activated {
   background-color: #2c2c6d;
   border-color: #2c2c6d; }
+.fc .circle-button {
+  border-radius: 16px;
+  background-color: rgba(39, 33, 33, 0.02); }
+.fc .editable {
+  margin: 0 4px;
+  padding: 2px 18px;
+  border: 1px solid #ddd;
+  border-radius: 3px; }
 
 .fc.fc-home .card.footcard {
   box-shadow: inset 0px 3px 2px rgba(0, 0, 0, 0.1); }

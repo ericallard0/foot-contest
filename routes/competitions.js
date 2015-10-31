@@ -20,31 +20,34 @@ var competitionRoute = {
           public = req.body.public || true;
       console.log(userId, name, public);
 
-      // Update the competitions
-      var competitionsQuery = Competitions.findOneAndUpdate(
+      // Search for a competitions
+      var competitionsQuery = Competitions.findOne(
         { name: name}, 
-        { $push: { users: ObjectId(userId) } },
-        {upsert: true, new: true},
-       
-        function(err, result) {
-          // If the create/update competition failed => return 500
-          if(err || ! result._id){
-            return sendError(err);
-          }
+        function(err, competition) {
+          // If don't find failed => return 500
+          if(err) sendError(err);
           // Update the user
-          var userQuery = User.findOneAndUpdate(
-            { _id: userId }, 
-            { $push: { competitions: ObjectId(result._id) } },
-            function(err, result){
-              if(err || ! result._id){
-                return sendError(err);
-              }
-              // Return the user updated
-              res.status(200);
-              return res.send(result);
-            }
-          );
-        }
+          var userQuery = User.findById(userId, function (err, user){
+
+            // If don't find failed => return 500
+            if(err || ! user._id) sendError(err);
+
+            // update a user and the competition 
+            user.competitions.push(objectId(competition._id));
+            competiton.users.push(objectId(userId));
+
+            // save both
+            user.save(function (err) {
+              if (err) return sendError(err);
+              competiton.save(function(err){
+                if(err) return sendError(err);
+                res.send(user);
+              });
+            });
+          });
+
+        },
+        {upsert: true, new: true}
       );
 
 

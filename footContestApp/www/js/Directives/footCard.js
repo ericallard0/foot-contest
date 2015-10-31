@@ -25,7 +25,7 @@ angular.module('FootCardDirective', [])
         scope.matchId = scope.fixture._links.self.href.split('/').pop();
         scope.prono = _.findWhere($rootScope.user.predictions, {matchId: scope.matchId});
         scope.isPredicted = !!scope.prono;
-        scope.matchScore = 0;
+        scope.matchScore = undefined;
         if(scope.isPredicted && scope.fixture.status === 'FINISHED'){
           scope.matchScore = Score.getMatchScore(scope.fixture, scope.prono);
         }
@@ -54,7 +54,7 @@ angular.module('FootCardDirective', [])
       scope.toggleOthers = function(){
         scope.othersBet = !scope.othersBet;
         if(scope.othersBet){
-          Score.usersBet(scope.matchId, $rootScope.users)
+          Score.usersBet(scope.matchId, $rootScope.users, scope.fixture)
             .then(function(data){
               scope.usersPrediction = data.data;
               $rootScope.users = data.users;  

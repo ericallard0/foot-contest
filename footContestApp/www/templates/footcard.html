@@ -16,15 +16,18 @@
       
       {{fixture.homeTeamName}} / {{fixture.awayTeamName}}
 
-      <span class="badge badge-dark" ng-if="matchScore !== 0">{{matchScore}}</span>
+      <span class="badge badge-dark" ng-if="matchScore >= 0">{{matchScore}}</span>
   </a>
 
   <!-- Predicted and not past -->
-  <div class="item item-text-wrap item-icon-right" ng-show="isPredicted && fixture.status === 'TIMED' && isOpen">
-      <div class="row">
-        <h2 ng-click="deletePrediction(prono._id)" class="col col-70 col-offset-10">Your bet: &nbsp;{{prono.predictHome}} - {{prono.predictAway}} &nbsp;</h2>
-      </div>
-      <i class="icon ion-ios-people-outline" ng-click="toggleOthers()"></i>
+  <div class="item item-text-wrap item-button-right" ng-show="isPredicted && fixture.status === 'TIMED' && isOpen">
+      <h2 class="dark">
+        Your bet:
+        <span class="editable" ng-click="deletePrediction(prono._id)">{{prono.predictHome}} - {{prono.predictAway}}</span>
+      </h2>
+      <button class="button button-stable circle-button" ng-click="toggleOthers()">
+        <i class="icon ion-ios-people-outline" ng-class="{'ion-ios-people-outline': !othersBet, 'ion-ios-arrow-up': othersBet}" ng-click="toggleOthers()"></i>
+      </button>
   </div>
 
 
@@ -34,7 +37,7 @@
   </div>
 
   <!-- Predicted and past -->
-  <div class="item item-text-wrap item-icon-right" ng-show="isPredicted && fixture.status === 'FINISHED' && isOpen">
+  <div class="item item-text-wrap item-button-right" ng-show="isPredicted && fixture.status === 'FINISHED' && isOpen">
     <div class="row">
       <p class="col col-30">Score</p>  
       <p class="col col-30">Bet</p>  
@@ -45,13 +48,19 @@
       <p class="col col-30">{{prono.predictHome}} - {{prono.predictAway}}</p>  
       <p class="col col-30">{{matchScore}}</p>  
     </div>
-      <i class="icon ion-ios-people-outline" ng-click="toggleOthers()"></i>
+    <button class="button button-stable circle-button" ng-click="toggleOthers()" style="margin-top:30px;">
+      <i class="icon ion-ios-people-outline" ng-class="{'ion-ios-people-outline': !othersBet, 'ion-ios-arrow-up': othersBet}" ng-click="toggleOthers()"></i>
+    </button>
+
+      <!-- <i class="icon ion-ios-people-outline" ng-click="toggleOthers()"></i> -->
   </div>
 
+  <!-- Friends predictions -->
   <div class="item item-text-wrap" ng-show="isOpen && othersBet">
     <p ng-repeat="prediction in usersPrediction" class="row">
-      <span class="col-90">{{prediction.username}}</span> 
-      <span class="col-10">{{prediction.prediction.predictHome}}-{{prediction.prediction.predictAway}}</span> 
+      <span class="col-50">{{prediction.username}}</span> 
+      <span class="col-20">{{prediction.prediction.predictHome}}-{{prediction.prediction.predictAway}}</span> 
+      <span class="col-30" ng-if="prediction.score">{{prediction.score}} points</span> 
     </p>
   </div>
 
