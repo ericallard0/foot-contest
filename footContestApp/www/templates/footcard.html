@@ -60,7 +60,7 @@
     <p ng-repeat="prediction in usersPrediction" class="row">
       <span class="col-50">{{prediction.username}}</span> 
       <span class="col-20">{{prediction.prediction.predictHome}}-{{prediction.prediction.predictAway}}</span> 
-      <span class="col-30" ng-if="prediction.score">{{prediction.score}} points</span> 
+      <span class="col-30" ng-if="prediction.score >= 0">{{prediction.score}} points</span> 
     </p>
   </div>
 
