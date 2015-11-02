@@ -6,26 +6,37 @@ angular.module('LoginController', [])
   '$scope', 
   '$state', 
   function (User, $rootScope, $scope, $state) {
+    $scope.loginForm = {};
+    $scope.failed = false;
+    $scope.loading = false;
 
-    $scope.register = function(uname, email, pwd){
-      User.register(uname, email, pwd)
+    $scope.register = function(form){
+      if(!form.$valid) return;
+      $scope.loading = true;
+      User.register($scope.loginForm.uname, $scope.loginForm.email, $scope.loginForm.pwd)
         .then(function(data){
           $rootScope.user = data.data;
           $rootScope.user.password = pwd;
+          $scope.loading = false;
           $state.go("tabs.home");
         }, function(err){
-          console.error(err);
+          $scope.loading = false;
+          $scope.failed = true;
         });
     }  
 
-    $scope.login = function(uname, pwd){
-      User.login(uname, pwd)
+    $scope.login = function(form){
+      if(!form.$valid) return;
+      $scope.loading = true;
+      User.login($scope.loginForm.uname, $scope.loginForm.pwd)
         .then(function(data){
           $rootScope.user = data.data;
-          $rootScope.user.password = pwd;
+          $rootScope.user.password = data.pwd;
+          $scope.loading = false;
           $state.go("tabs.home");
         }, function(err){
-          console.error(err);
+          $scope.loading = false;
+          $scope.failed = true;
         });
     }  
 }])

@@ -49,6 +49,7 @@ var userRoute = {
     User.route('login.post', function(req, res){
       var uname = req.body.username;
       var pwd = req.body.password;
+      console.log(uname, pwd);
       authenticator.authenticate(uname, pwd)
         .then(function(result){
           if(result){

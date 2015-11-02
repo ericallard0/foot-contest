@@ -13,17 +13,17 @@
     }
 
     &.red > .item:first-child{
-      background-color: #eb7e61;
+      background-color: $red;
       color: white;
     }
 
     &.yellow > .item:first-child{
-      background-color: #f1d04f;
+      background-color: $yellow;
       color: white;
     }
 
     &.green > .item:first-child{
-      background-color: #07c6b2;
+      background-color: $green;
       color: white;
     }
 

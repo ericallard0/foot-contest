@@ -7,21 +7,25 @@
       <h1 class="title">The Bookmaker</h1>
     </div>
 
-    <div class="list">
-      <label class="item item-input">
-        <input type="text" ng-model="form_uname" placeholder="Username">
-      </label>
-      <label class="item item-input">
-        <input type="text" ng-model="form_email" placeholder="Email">
-      </label>
-      <label class="item item-input">
-        <input type="password" ng-model="form_pwd" placeholder="Password">
-      </label>
-    </div>
-    <div class="padding-top">
-      <button ng-click="register(form_uname, form_email, form_pwd)" 
-      class="button button-full button-positive activated">Register</button>
-    </div>
+    <form name="signinForm" novalidate="" ng-submit="register(signinForm)">
+      <div class="list">
+        <label class="item item-input" ng-class="{ 'has-errors' : signinForm.uname.$invalid && signinForm.$submitted}">
+          <input type="text" name="uname" ng-model="loginForm.uname" placeholder="Username" required>
+        </label>
+        <label class="item item-input" ng-class="{ 'has-errors' : signinForm.email.$invalid && signinForm.email.$touched}">
+          <input type="email" name="email" ng-model="loginForm.email" placeholder="Email" required>
+        </label>
+        <label class="item item-input" ng-class="{ 'has-errors' : signinForm.pwd.$invalid  && signinForm.$submitted}">
+          <input type="password" name="pwd" ng-model="loginForm.pwd" placeholder="Password" ng-minlength="5" ng-maxlength="20" required>
+        </label>
+      </div>
+      <p class="failed" ng-show="failed && !loading">Failed... Try again!</p>
+      <div class="padding-top submit-field">
+        <ion-spinner ng-show="loading" icon="spiral"></ion-spinner>
+        <button ng-show="!loading" type="submit"
+        class="button button-full button-positive activated">Register</button>
+      </div>
+    </form>
   </ion-content>
 
   <div class="tabs tabs-striped tabs-icon-top tabs-color-positive">

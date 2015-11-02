@@ -18,6 +18,16 @@
 .tabs-striped.tabs-color-positive .tab-item {
   color: rgba(44, 44, 109, 0.4); }
 
+label.has-errors input {
+  color: #eb7e61; }
+
+p.failed {
+  color: #eb7e61;
+  text-align: center; }
+
+.submit-field {
+  text-align: center; }
+
 .bar.bar-stable .title {
   font-style: oblique; }
 

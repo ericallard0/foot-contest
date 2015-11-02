@@ -23,3 +23,16 @@
 .tabs-striped.tabs-color-positive .tab-item{
   color: rgba(44, 44, 109, 0.4);
 }
+
+label.has-errors input{
+  color: $red;
+}
+
+p.failed{
+  color: $red;
+  text-align: center;
+}
+
+.submit-field {
+    text-align: center;
+}

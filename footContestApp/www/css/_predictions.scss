@@ -9,15 +9,15 @@
       border-bottom-width: 0px;
     }
     &.red > .item:first-child i{
-      color: #eb7e61;
+      color: $red;
     }
 
     &.yellow > .item:first-child i{
-      color: #f1d04f;
+      color: $yellow;
     }
 
     &.green > .item:first-child i{
-      color: #07c6b2;
+      color: $green;
     }
 
     >.item .badge{
