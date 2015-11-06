@@ -12,7 +12,7 @@
           <input type="text" name="uname" ng-model="loginForm.uname" placeholder="Username" required>
         </label>
         <label class="item item-input" ng-class="{ 'has-errors' : signinForm.pwd.$invalid  && signinForm.$submitted}">
-          <input type="password" name="pwd" ng-model="loginForm.pwd" placeholder="Password" ng-minlength="5" ng-maxlength="20" required>
+          <input type="password" name="pwd" ng-model="loginForm.pwd" placeholder="Password" ng-minlength="1" ng-maxlength="20" required>
         </label>
       </div>
       <p class="failed" ng-show="failed && !loading">Failed... Try again!</p>

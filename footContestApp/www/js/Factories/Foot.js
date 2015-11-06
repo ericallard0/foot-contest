@@ -14,7 +14,11 @@ angular.module('FootFactory', [])
   Foot.getFixtures = function(){
     return $http.get(apiRoute)
       .then(function(data){
-        return data.data.fixtures;
+        // Update each fixture with matchId
+        return data.data.fixtures.map(function(fixt){
+          fixt.matchId = _.last(fixt._links.self.href.split('/'));
+          return fixt;
+        });
       })
   }
 

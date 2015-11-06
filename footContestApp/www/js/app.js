@@ -9,6 +9,8 @@ angular.module('starter', [
   'FootFactory',
   'ScoreFactory',
   'FootCardDirective',
+  'ScoreItemDirective',
+  'ScoreChartDirective',
   'LoginController',
   'MainController',
   'HomeController',

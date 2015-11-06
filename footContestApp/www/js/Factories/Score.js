@@ -4,21 +4,22 @@ angular.module('ScoreFactory', [])
   'Foot',
   '$http',
   '$q',
+  '$rootScope',
   function (
     User,
     Foot,
     $http,
-    $q
+    $q,
+    $rootScope
   ) {
   
   var Score = {};
 
   Score.getMatchScore = function(match, predict){
     // If the prediction does not exist
-    if(predict.predictHome === undefined) return undefined;
+    // Or if the match is not done yet => no score to add
+    if(predict.predictHome === undefined || !match || match.status !== 'FINISHED') return undefined;
     var score = 0;
-    // If the match is not done yet => no score to add
-    if(!match || match.status !== 'FINISHED') return score;
     // same result +70
     if(predict.predictHome === match.result.goalsHomeTeam
        && predict.predictAway === match.result.goalsAwayTeam){
@@ -72,19 +73,15 @@ angular.module('ScoreFactory', [])
       var users = data[0];
       var fixtures = data[1];
 
-      // Update each fixture with matchId
-      fixtures = fixtures.map(function(fixt){
-        fixt.matchId = _.last(fixt._links.self.href.split('/'));
-        return fixt;
-      });
-
+      $rootScope.fixtures = fixtures;
+      
       angular.forEach(users, function(user, index){
         user.score = 0;
         // for each predicted match of each user
         angular.forEach(user.predictions, function(predict){
           // Get exact result
           var match = _.findWhere(fixtures, {matchId : predict.matchId});
-          user.score += Score.getMatchScore(match, predict);
+          user.score += Score.getMatchScore(match, predict) || 0;
         });
         // Update the users array with the user score
         users[index] = user;
@@ -101,6 +98,37 @@ angular.module('ScoreFactory', [])
       return e._id == user._id;
     }) +1;
   };
+
+  Score.mapResults = function(predictions){
+    var p;
+    if(! $rootScope.fixtures.length){
+      p = Foot.getFixtures();
+    }
+    else{
+      p = $q.when($rootScope.fixtures);
+    }
+    
+    return p.then(function(fixtures){
+      var results = [];      
+      angular.forEach(predictions, function(predict){
+        // Get exact result
+        var match = _.findWhere(fixtures, {matchId : predict.matchId});
+        var result = Score.getMatchScore(match, predict);
+        if(result !== undefined){
+          results.push({
+            date: new Date(match.date),
+            result: result,
+            match: match,
+            prediction: predict
+          })
+        }
+      });
+      var results = _.sortBy(results, function(e){
+        return e.date.getTime();
+      });
+      return results;
+    });
+  }
 
   Score.usersBet = function(matchId, users, fixture){
     var getUsers;
