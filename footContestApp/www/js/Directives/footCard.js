@@ -18,6 +18,7 @@ angular.module('FootCardDirective', [])
         scope.fixture.awayTeamName = Foot.translateName(scope.fixture.awayTeamName);
         scope.fixture.homeTeamName = Foot.translateName(scope.fixture.homeTeamName);
         scope.predictHome =  scope.predictAway = "";
+        scope.fixture.datePrint = (new Date(scope.fixture.date)).toLocaleString();
         
         scope.matchId = scope.fixture._links.self.href.split('/').pop();
         scope.prono = _.findWhere($rootScope.user.predictions, {matchId: scope.matchId});
