@@ -11,6 +11,21 @@ angular.module('FootFactory', [])
   var apiRoute = 'http://footcontest.herokuapp.com/api/v1/foot';
   if(location.hostname === "localhost") apiRoute = '/api/v1/foot';
   
+  Foot.translateName = function(name){
+    name = name.replace("Paris Saint-Germain", "PSG");
+    name = name.replace("FC Girondins de Bordeaux", "Bordeaux");
+    name = name.replace("Montpellier Hérault SC", "Montpellier");
+    name = name.replace("AS Monaco FC", "AS Monaco");
+    name = name.replace("Stade de Reims", "Reims");
+    name = name.replace("Olympique de Marseille", "OM");
+    name = name.replace("Stade Rennais", "Rennes");
+    name = name.replace("Olympique Lyonnais", "Olymp. Lyonnais");
+    name = name.replace("FC Nantes", "Nantes");
+    name = name.replace("EA Guingamp", "Guingamp");
+    name = name.replace("Shakhtar Donetsk", "Sh. Donetsk");
+    return name;
+  }
+  
   Foot.getFixtures = function(){
     return $http.get(apiRoute)
       .then(function(data){

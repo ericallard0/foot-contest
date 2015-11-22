@@ -1,44 +1,69 @@
 angular.module('ScoreChartDirective', ['highcharts-ng'])
-.directive('scoreChart', ['User', 'Score', '$rootScope', function (User, Score, $rootScope) {
+.directive('scoreChart', ['Foot', 'User', 'Score', '$rootScope', function (Foot, User, Score, $rootScope) {
   return {
     restrict: 'E',
-    template : '<highchart id="chart1" config="chartConfig1" style="height:200px;"></highchart>',
+    template : '<highchart config="chartConfig1" style="height:200px;"></highchart>',
     link: function (scope, iElement, iAttrs) {
       scope.chartConfig1 = {
         options: {
           chart: {
-            type: 'areaspline',
-            zoomType: 'y',
+            type: 'spline',
             height: 200
           },
-          legend:{
-            enabled: false,
-            style: {
-              display: 'none'
+          plotOptions:{
+            spline:{
+              marker:{
+                enabled:false,
+                fillColor: "black"
+              }
             }
+          },
+          yAxis:{
+            labels:{
+              enabled: false
+            },
+            tickInterval: 20,
+            max: 80,
+            title:{
+              text: null
+            }
+          },
+          xAxis:{
+            labels:{
+              enabled: false
+            },
+            type: 'category',
+            title:{
+              text: null
+            }
+          },
+          credits: {
+            enabled: false
           }
         },
 
         title: {
           text: null,
         },
-  
-        loading: false,
-
-        series: []
+        loading: true,
       };
 
-      Score.mapResults(scope.person.predictions)
-        .then(function(r){
-          var i = 0;
-          var serie = r.map(function(e){
-            return [i++, e.result];
-          });
-          scope.chartConfig1.series.push({
-            data: serie
-          });
-        });
-
+      scope.scoreDataPromise.then(function(){
+        var data = _.findWhere(scope.scoreData.results, {name: scope.person.username})
+        scope.chartConfig1.series = [
+          {
+            // showInLegend: false,
+            name: "result",
+            data: data.userResults
+          },
+          {
+            name: 'average',
+            data: data.globalResults
+          },
+        ];
+        scope.chartConfig1.loading = false;
+      });
+      
     }
   };
 }]);

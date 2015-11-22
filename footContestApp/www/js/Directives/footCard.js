@@ -1,5 +1,5 @@
 angular.module('FootCardDirective', [])
-.directive('footCard', ['User', 'Score', '$rootScope', function (User, Score, $rootScope) {
+.directive('footCard', ['Foot', 'User', 'Score', '$rootScope', function (Foot, User, Score, $rootScope) {
   return {
     restrict: 'E',
     replace: true,
@@ -15,11 +15,8 @@ angular.module('FootCardDirective', [])
       scope.othersBet = false;
       // Replace Paris Saint-Germain to PSG
       var init = function(){
-        scope.fixture.awayTeamName = scope.fixture.awayTeamName.replace("Paris Saint-Germain", "PSG");
-        scope.fixture.homeTeamName = scope.fixture.homeTeamName.replace("Paris Saint-Germain", "PSG");
-        scope.fixture.awayTeamName = scope.fixture.awayTeamName.replace("FC Girondins de Bordeaux", "Bordeaux");
-        scope.fixture.homeTeamName = scope.fixture.homeTeamName.replace("FC Girondins de Bordeaux", "Bordeaux");
-        scope.fixture.datePrint = (new Date(scope.fixture.date)).toLocaleString();
+        scope.fixture.awayTeamName = Foot.translateName(scope.fixture.awayTeamName);
+        scope.fixture.homeTeamName = Foot.translateName(scope.fixture.homeTeamName);
         scope.predictHome =  scope.predictAway = "";
         
         scope.matchId = scope.fixture._links.self.href.split('/').pop();

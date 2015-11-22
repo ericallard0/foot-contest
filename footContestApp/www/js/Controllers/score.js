@@ -5,9 +5,15 @@ angular.module('ScoreController', [])
   '$rootScope', 
   '$scope', 
   '$state', 
-  function (Score, $rootScope, $scope, $state) {
+  '$q', 
+  function (Score, $rootScope, $scope, $state, $q) {
 
-  $scope.rank = 0;
+  var defered = $q.defer()
+  $scope.scoreDataPromise = defered.promise;
+  
+  var getScoreData = function(){
+    $scope.scoreData = Score.getAllPastPredicted($rootScope.users, $rootScope.fixtures);
+  }
 
   $scope.doRefresh = function(f, u){
     Score.getSortedUsers({
@@ -18,6 +24,8 @@ angular.module('ScoreController', [])
       $rootScope.users = users;
       $scope.rank = Score.getRank(users, $rootScope.user)
       $scope.$broadcast('scroll.refreshComplete');
+      getScoreData();
+      defered.resolve();
     });
   }
   if($rootScope.users.length === 0){
@@ -28,5 +36,7 @@ angular.module('ScoreController', [])
   }
   else{
     $scope.rank = Score.getRank($rootScope.users, $rootScope.user);
+    getScoreData();
+    defered.resolve();
   }
 }])

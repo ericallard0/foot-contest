@@ -20,15 +20,26 @@ angular.module('ScoreFactory', [])
     // Or if the match is not done yet => no score to add
     if(predict.predictHome === undefined || !match || match.status !== 'FINISHED') return undefined;
     var score = 0;
-    // same result +70
+    // same winner +20
+    if((predict.predictHome > predict.predictAway && 
+      match.result.goalsHomeTeam > match.result.goalsAwayTeam)
+      || (predict.predictHome < predict.predictAway && 
+      match.result.goalsHomeTeam < match.result.goalsAwayTeam)){
+      score += 20;
+    }
+    // Else: 0
+    else{
+      return 0;
+    } 
+    // same result +80
     if(predict.predictHome === match.result.goalsHomeTeam
        && predict.predictAway === match.result.goalsAwayTeam){
-      return 60;
+      return 80;
     }
-    // same goal dif +50
+    // same goal dif +60
     if(predict.predictHome - predict.predictAway ===
       match.result.goalsHomeTeam - match.result.goalsAwayTeam){
-      return 40;
+      return 60;
     }
     // same goal for one team +20
     if(predict.predictHome === match.result.goalsHomeTeam ){
@@ -37,13 +48,6 @@ angular.module('ScoreFactory', [])
     // same goal for one team +20
     if(predict.predictAway === match.result.goalsAwayTeam ){
       score += 20;
-    }
-    // same winner +20
-    if((predict.predictHome > predict.predictAway && 
-      match.result.goalsHomeTeam > match.result.goalsAwayTeam)
-      || (predict.predictHome < predict.predictAway && 
-      match.result.goalsHomeTeam < match.result.goalsAwayTeam)){
-      score += 20
     }
     // ELSE
     return score;
@@ -99,37 +103,92 @@ angular.module('ScoreFactory', [])
     }) +1;
   };
 
-  Score.mapResults = function(predictions){
-    var p;
-    if(! $rootScope.fixtures.length){
-      p = Foot.getFixtures();
-    }
-    else{
-      p = $q.when($rootScope.fixtures);
-    }
+
+  Score.getAllPastPredicted = function(users, fixtures){
+    // Dictionary of predicted match from the user-group
+    var predicted = {};
+    // Array of result for each users
+    var results = users.map(function(user){
+      var userResults = [];
     
-    return p.then(function(fixtures){
-      var results = [];      
-      angular.forEach(predictions, function(predict){
-        // Get exact result
-        var match = _.findWhere(fixtures, {matchId : predict.matchId});
-        var result = Score.getMatchScore(match, predict);
+      angular.forEach(user.predictions, function(prediction){
+        var match = _.findWhere(fixtures, {matchId : prediction.matchId});
+        var result = Score.getMatchScore(match, prediction);
         if(result !== undefined){
-          results.push({
+          if(!predicted[prediction.matchId]){
+            predicted[prediction.matchId] = {
+              date: new Date(match.date),
+              score:  result
+            }
+          }else{
+            predicted[prediction.matchId].score += result;
+          }
+          userResults.push({
             date: new Date(match.date),
             result: result,
             match: match,
-            prediction: predict
-          })
+            matchId: match.matchId,
+            prediction: prediction
+          });
         }
       });
-      var results = _.sortBy(results, function(e){
-        return e.date.getTime();
-      });
-      return results;
-    });
-  }
 
+      return {
+        user: user,
+        data: userResults
+      };
+    });
+    // Get array of items like: [matchId, date] 
+    predicted = _.pairs(predicted);
+    // Sort by date
+    predicted = _.sortBy(predicted, function(e){
+      return e[1].date.getTime();
+    });
+    var numberOfUsers = results.length;
+    // Get result for each users and each predicted match 
+    results = results.map(function(ur){
+      var userResults = [];
+      var userResultsSum = [];
+      var globalResults = [];
+      var globalResultsSum = [];
+      var userGap = [];
+      var userGapSum = [];
+      var currentScore = 0;
+      var currentGlobalScore = 0;
+      angular.forEach(predicted, function(e){
+        var matchId = e[0];
+        var userResult = _.findWhere(ur.data, {matchId: matchId});
+        var result = 0;
+        var globalResult = (e[1].score)/numberOfUsers;
+        if(userResult){
+          result = userResult.result;
+        }
+        currentScore += result;
+        currentGlobalScore += globalResult;
+        userResults.push(result);
+        userResultsSum.push(currentScore);
+        globalResults.push(globalResult);
+        globalResultsSum.push(currentGlobalScore);
+        userGap.push(result - globalResult);
+        userGapSum.push(currentScore - currentGlobalScore);
+      });
+      ur.userResults = userResults;
+      ur.userResultsSum = userResultsSum;
+      ur.globalResults = globalResults;
+      ur.globalResultsSum = globalResultsSum;
+      ur.userGap = userGap;
+      ur.userGapSum = userGapSum;
+      ur.data = userGap;
+      ur.name = ur.user.username;
+      return ur;
+    });
+
+    return {
+      predicted: predicted,
+      results: results
+    };
+  }
+  
   Score.usersBet = function(matchId, users, fixture){
     var getUsers;
     var defered = $q.defer();    

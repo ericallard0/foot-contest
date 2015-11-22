@@ -1,3 +1,4 @@
+
 angular.module('SettingsController', [])
   
 .controller('settingsCtrl', [
@@ -16,9 +17,8 @@ angular.module('SettingsController', [])
     }
 
     $scope.devModeChange = function(devMode){
-      if($rootScope.user.username === 'bob'){
-        $rootScope.devMode = devMode;
-      }
+      $rootScope.devMode = devMode;
+      localStorage.setItem('devMode', devMode);
     }
 
     $scope.showPastChange = function(showPast){

@@ -20,7 +20,7 @@ angular.module('MainController', [])
     redirectToLogin({}, {name: location.hash.substr(2)});
     $rootScope.fixtures = [];
     $rootScope.users = [];
-    $rootScope.devMode = false;
+    $rootScope.devMode = !(localStorage.getItem('devMode') == "false") || false;
     $rootScope.showPast = !(localStorage.getItem('showPast') == "false") || false;
     
 }])
