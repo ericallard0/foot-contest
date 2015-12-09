@@ -52,7 +52,6 @@ angular.module('ScoreChartDirective', ['highcharts-ng'])
         var data = _.findWhere(scope.scoreData.results, {name: scope.person.username})
         scope.chartConfig1.series = [
           {
-            // showInLegend: false,
             name: "result",
             data: data.userResults
           },

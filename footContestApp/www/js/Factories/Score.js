@@ -82,7 +82,9 @@ angular.module('ScoreFactory', [])
       angular.forEach(users, function(user, index){
         user.score = 0;
         // for each predicted match of each user
-        angular.forEach(user.predictions, function(predict){
+        var p = _.groupBy(user.predictions, 'matchId')
+        angular.forEach(p, function(predict){
+          predict = _.last(predict)
           // Get exact result
           var match = _.findWhere(fixtures, {matchId : predict.matchId});
           user.score += Score.getMatchScore(match, predict) || 0;
