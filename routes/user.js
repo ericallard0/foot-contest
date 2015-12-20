@@ -108,8 +108,6 @@ var userRoute = {
         }
         var userId = req.params.id;
         var predictId = req.query.predictId;
-        // TODO: check if it's not too late
-        if(!canPredict(matchId)) return handleError("can't predict");
         User.findById(userId, function (err, doc){
           var prediction = doc.predictions.id(predictId);
           if(!canPredict(prediction.matchId)) return handleError("can't predict");

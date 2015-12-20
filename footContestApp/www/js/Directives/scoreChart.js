@@ -6,9 +6,12 @@ angular.module('ScoreChartDirective', ['highcharts-ng'])
     link: function (scope, iElement, iAttrs) {
       scope.chartConfig1 = {
         options: {
+          backgroundColor: '#434343',
+          background: '#434343',
           chart: {
             type: 'spline',
-            height: 200
+            height: 200,
+            backgroundColor: '#434343'
           },
           plotOptions:{
             spline:{
@@ -19,9 +22,6 @@ angular.module('ScoreChartDirective', ['highcharts-ng'])
             }
           },
           yAxis:{
-            labels:{
-              enabled: false
-            },
             tickInterval: 20,
             max: 80,
             title:{
@@ -49,17 +49,26 @@ angular.module('ScoreChartDirective', ['highcharts-ng'])
       };
 
       scope.scoreDataPromise.then(function(){
-        var data = _.findWhere(scope.scoreData.results, {name: scope.person.username})
+        var data = _.findWhere(scope.scoreData.results, {name: scope.person.username});
+        var currentUserData = _.findWhere(scope.scoreData.results, {name: $rootScope.user.username});
         scope.chartConfig1.series = [
           {
-            name: "result",
+            name: scope.person.username,
             data: data.userResults
-          },
-          {
-            name: 'average',
-            data: data.globalResults
-          },
+          }
         ];
+        if($rootScope.user.username !== scope.person.username){
+          scope.chartConfig1.series.unshift({
+            name: $rootScope.user.username,
+            data: currentUserData.userResults            
+          });
+        }
+        else{
+          scope.chartConfig1.series.unshift({
+            name: 'Average',
+            data: data.globalResults
+          });
+        }
         scope.chartConfig1.loading = false;
       });
       

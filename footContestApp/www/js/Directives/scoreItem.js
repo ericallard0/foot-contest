@@ -4,7 +4,7 @@ angular.module('ScoreItemDirective', ['highcharts-ng'])
     restrict: 'E',
     replace: true,
     template :[       
-      '<li class="item" ng-class="{\'item-divider\': person.username === user.username}" ng-click="open = !open">',
+      '<li class="item score-person" ng-click="open = !open">',
         '{{person.username}}',
         '<span class="item-note">{{person.score}}</span>',
         '<score-chart ng-if="open" user-data="[]"></score-chart>',
