@@ -115,5 +115,7 @@ p.failed {
 
 .score-person.item.active, .score-person.item.activated, .score-person.item-complex.active .item-content, .score-person.item-complex.activated .item-content, .score-person.item .item-content.active, .score-person.item .item-content.activated {
   background-color: white; }
+.score-person .chart-container {
+  margin-top: 5px; }
 
 /*# sourceMappingURL=style.css.map */

@@ -2,74 +2,28 @@ angular.module('ScoreChartDirective', ['highcharts-ng'])
 .directive('scoreChart', ['Foot', 'User', 'Score', '$rootScope', function (Foot, User, Score, $rootScope) {
   return {
     restrict: 'E',
-    template : '<highchart config="chartConfig1" style="height:200px;"></highchart>',
+    template : '<div ng-if="loaded"><canvas id="line" class="chart chart-line" data="data" colours="colours" labels="labels" legend="true" series="series" options="{showTooltips: false}"></canvas></div>',
     link: function (scope, iElement, iAttrs) {
-      scope.chartConfig1 = {
-        options: {
-          backgroundColor: '#434343',
-          background: '#434343',
-          chart: {
-            type: 'spline',
-            height: 200,
-            backgroundColor: '#434343'
-          },
-          plotOptions:{
-            spline:{
-              marker:{
-                enabled:false,
-                fillColor: "black"
-              }
-            }
-          },
-          yAxis:{
-            tickInterval: 20,
-            max: 80,
-            title:{
-              text: null
-            }
-          },
-          xAxis:{
-            labels:{
-              enabled: false
-            },
-            type: 'category',
-            title:{
-              text: null
-            }
-          },
-          credits: {
-            enabled: false
-          }
-        },
-
-        title: {
-          text: null,
-        },
-        loading: true,
-      };
-
+      scope.loaded = false;
+      scope.colours = ["green", "blue"]
       scope.scoreDataPromise.then(function(){
         var data = _.findWhere(scope.scoreData.results, {name: scope.person.username});
         var currentUserData = _.findWhere(scope.scoreData.results, {name: $rootScope.user.username});
-        scope.chartConfig1.series = [
-          {
-            name: scope.person.username,
-            data: data.userResults
-          }
-        ];
+
+        scope.series = [scope.person.username];
+        scope.data = [data.userResults];
+
         if($rootScope.user.username !== scope.person.username){
-          scope.chartConfig1.series.unshift({
-            name: $rootScope.user.username,
-            data: currentUserData.userResults            
-          });
+          scope.data.push(currentUserData.userResults)
+          scope.series.push($rootScope.user.username)
         }
         else{
-          scope.chartConfig1.series.unshift({
-            name: 'Average',
-            data: data.globalResults
-          });
+          scope.data.push(data.globalResults)
+          scope.series.push('Average')
         }
-        scope.chartConfig1.loading = false;
+
+        scope.labels = Array(scope.data[0].length).join(".").split("."); //empty string array
+        scope.loaded = true;
       });
       
     }
